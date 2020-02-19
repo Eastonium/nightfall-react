@@ -1,0 +1,756 @@
+{
+	"hack": {
+		"name": "Hack",
+		"desc": "Basic attack program",
+		"speed": 2,
+		"max_size": 4,
+		"color": "#00c7ff",
+		"commands": [
+			{
+				"name": "Slice",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"hack_2": {
+		"name": "Hack 2.0",
+		"desc": "Improved Hack: Larger size and better attacks",
+		"speed": 3,
+		"max_size": 4,
+		"color": "#00c7ff",
+		"commands": [
+			{
+				"name": "Slice",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			},{
+				"name": "Dice",
+				"range": 1,
+				"target": {
+					"size": -3
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 3,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"hack_3": {
+		"name": "Hack 3.0",
+		"desc": "The top of the Hack series",
+		"speed": 4,
+		"max_size": 4,
+		"color": "#00c7ff",
+		"commands": [
+			{
+				"name": "Slice",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			},{
+				"name": "Mutilate",
+				"range": 1,
+				"target": {
+					"size": -4
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 4,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"slingshot": {
+		"name": "Slingshot",
+		"desc": "Basic ranged attack program",
+		"speed": 2,
+		"max_size": 2,
+		"color": "#00daa5",
+		"commands": [
+			{
+				"name": "Stone",
+				"range": 3,
+				"target": {
+					"size": -1
+				}
+			}
+		]
+	},
+	"seeker": {
+		"name": "Seeker",
+		"desc": "Solid distance attack program",
+		"speed": 3,
+		"max_size": 3,
+		"color": "#00daa5",
+		"commands": [
+			{
+				"name": "Peek",
+				"range": 2,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"seeker_2": {
+		"name": "Seeker 2.0",
+		"desc": "Bigger and better than seeker",
+		"speed": 3,
+		"max_size": 4,
+		"color": "#00daa5",
+		"commands": [
+			{
+				"name": "Poke",
+				"range": 3,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"seeker_3": {
+		"name": "Seeker 3.0",
+		"desc": "Seeker with extra deletion power",
+		"speed": 4,
+		"max_size": 5,
+		"color": "#00daa5",
+		"commands": [
+			{
+				"name": "Poke",
+				"range": 3,
+				"target": {
+					"size": -2
+				}
+			},{
+				"name": "Seek and Destroy",
+				"range": 2,
+				"target": {
+					"size": -5
+				},
+				"self": {
+					"size": -2
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 5,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"bug": {
+		"name": "Bug",
+		"desc": "Fast, cheap, and out of control",
+		"speed": 5,
+		"max_size": 1,
+		"color": "#84fc00",
+		"commands": [
+			{
+				"name": "Glitch",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"mandelbug": {
+		"name": "MandelBug",
+		"desc": "It's not a bug, it's a feature",
+		"speed": 5,
+		"max_size": 1,
+		"color": "#84fc00",
+		"commands": [
+			{
+				"name": "Fractal Glitch",
+				"range": 1,
+				"target": {
+					"size": -4
+				}
+			}
+		]
+	},
+	"heisenbug": {
+		"name": "HeisenBug",
+		"desc": "They can't kill what they can't catch",
+		"speed": 5,
+		"max_size": 1,
+		"color": "#84fc00",
+		"commands": [
+			{
+				"name": "Quantum Glitch",
+				"range": 1,
+				"target": {
+					"size": -6
+				}
+			}
+		]
+	},
+	"data_doctor": {
+		"name": "Data Doctor",
+		"desc": "Helps your programs grow",
+		"speed": 4,
+		"max_size": 5,
+		"color": "#0132fa",
+		"commands": [
+			{
+				"name": "Grow",
+				"target": {
+					"size": 2
+				}
+			}
+		]
+	},
+	"medic": {
+		"name": "Medic",
+		"desc": "Grows your programs from a distance",
+		"speed": 3,
+		"max_size": 3,
+		"color": "#0132fa",
+		"commands": [
+			{
+				"name": "Hypo",
+				"range": 3,
+				"target": {
+					"size": 2
+				}
+			}
+		]
+	},
+	"data_doctor_pro": {
+		"name": "Data Doctor Pro",
+		"desc": "Twice the expansion power of the data doctor",
+		"speed": 5,
+		"max_size": 8,
+		"color": "#0132fa",
+		"commands": [
+			{
+				"name": "Megagrow",
+				"range": 1,
+				"target": {
+					"size": 4
+				}
+			},{
+				"name": "Surgery",
+				"range": 1,
+				"target": {
+					"max_size": 1
+				}
+			}
+		]
+	},
+	"bit_man": {
+		"name": "Bit-Man",
+		"desc": "Makes sectors of the grid appear or disappear",
+		"speed": 3,
+		"max_size": 3,
+		"color": "#b4ff00",
+		"commands": [
+			{
+				"name": "Zero",
+				"range": 1,
+				"special": "remove_sector"
+			},{
+				"name": "One",
+				"range": 1,
+				"special": "add_sector"
+			}
+		]
+	},
+	"clog_01": {
+		"name": "Clog.01",
+		"desc": "Slows down hostile programs",
+		"speed": 2,
+		"max_size": 4,
+		"color": "#00fdc7",
+		"commands": [
+			{
+				"name": "Lag",
+				"range": 3,
+				"target": {
+					"speed": -1
+				}
+			}
+		]
+	},
+	"clog_02": {
+		"name": "Clog.02",
+		"desc": "Twice as effective as version.01",
+		"speed": 2,
+		"max_size": 4,
+		"color": "#00fdc7",
+		"commands": [
+			{
+				"name": "Chug",
+				"range": 3,
+				"target": {
+					"speed": -2
+				}
+			}
+		]
+	},
+	"clog_03": {
+		"name": "Clog.03",
+		"desc": "Brings hostile programs to a halt",
+		"speed": 2,
+		"max_size": 4,
+		"color": "#00fdc7",
+		"commands": [
+			{
+				"name": "Chug",
+				"range": 3,
+				"target": {
+					"speed": -2
+				},
+				"self": {
+
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "",
+						"value": 1,
+						"operator": "ge"
+					}
+				]
+			},{
+				"name": "Hang",
+				"range": 3,
+				"target": {
+					"speed": -9999
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 4,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"golem_mud": {
+		"name": "Golem.mud",
+		"desc": "Slow and steady attack program",
+		"speed": 1,
+		"max_size": 5,
+		"color": "#03fcf8",
+		"commands": [
+			{
+				"name": "Thump",
+				"range": 1,
+				"target": {
+					"size": -3
+				}
+			}
+		]
+	},
+	"golem_clay": {
+		"name": "Golem.clay",
+		"desc": "Clay is stronger than mud",
+		"speed": 2,
+		"max_size": 6,
+		"color": "#03fcf8",
+		"commands": [
+			{
+				"name": "Bash",
+				"range": 1,
+				"target": {
+					"size": -5
+				}
+			}
+		]
+	},
+	"golem_stone": {
+		"name": "Golem.stone",
+		"desc": "Nothing can stand in its way",
+		"speed": 3,
+		"max_size": 7,
+		"color": "#03fcf8",
+		"commands": [
+			{
+				"name": "Crash",
+				"range": 1,
+				"target": {
+					"size": -7
+				}
+			}
+		]
+	},
+	"wolf_spider": {
+		"name": "Wolf Spider",
+		"desc": "Speedy and creepy little program",
+		"speed": 3,
+		"max_size": 3,
+		"color": "#14ea00",
+		"commands": [
+			{
+				"name": "Byte",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"black_widow": {
+		"name": "Black Widow",
+		"desc": "Speedier and creepier",
+		"speed": 4,
+		"max_size": 3,
+		"color": "#14ea00",
+		"commands": [
+			{
+				"name": "Byte",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			},{
+				"name": "Paralyze",
+				"range": 1,
+				"target": {
+					"speed": -3
+				}
+			}
+		]
+	},
+	"tarantula": {
+		"name": "Tarantula",
+		"desc": "Fast, with a venomous bite",
+		"speed": 5,
+		"max_size": 3,
+		"color": "#14ea00",
+		"commands": [
+			{
+				"name": "Megabyte",
+				"range": 1,
+				"target": {
+					"size": -3
+				}
+			},{
+				"name": "Paralyze",
+				"range": 1,
+				"target": {
+					"speed": -3
+				}
+			}
+		]
+	},
+	"tower": {
+		"name": "Tower",
+		"desc": "Immobile long-range program",
+		"speed": 0,
+		"max_size": 1,
+		"color": "#01fc95",
+		"commands": [
+			{
+				"name": "Spot",
+				"range": 3,
+				"target": {
+					"size": -3
+				}
+			}
+		]
+	},
+	"mobile_tower": {
+		"name": "Mobile Tower",
+		"desc": "Slow-moving, long-range program",
+		"speed": 1,
+		"max_size": 1,
+		"color": "#01fc95",
+		"commands": [
+			{
+				"name": "Spot",
+				"range": 3,
+				"target": {
+					"size": -3
+				}
+			}
+		]
+	},
+	"turbo": {
+		"name": "Turbo",
+		"desc": "Speeds up your programs",
+		"speed": 3,
+		"max_size": 3,
+		"color": "#0090fc",
+		"commands": [
+			{
+				"name": "Boost",
+				"range": 1,
+				"target": {
+					"speed": 1
+				},
+				"self": {
+					"size": -1
+				}
+			}
+		]
+	},
+	"turbo_deluxe": {
+		"name": "Turbo Deluxe",
+		"desc": "Slow and steady is for losers",
+		"speed": 4,
+		"max_size": 4,
+		"color": "#0090fc",
+		"commands": [
+			{
+				"name": "Megaboost",
+				"range": 2,
+				"target": {
+					"speed": 2
+				},
+				"self": {
+					"size": -2
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 3,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"buzzbomb": {
+		"name": "BuzzBomb",
+		"desc": "Fast and annoying",
+		"speed": 8,
+		"max_size": 2,
+		"color": "#0090fc",
+		"commands": [
+			{
+				"name": "Sting",
+				"range": 1,
+				"target": {
+					"size": -1
+				}
+			},{
+				"name": "Kamikazee",
+				"range": 1,
+				"target": {
+					"size": -5
+				},
+				"self": {
+					"size": -9999
+				}
+			}
+		]
+	},
+	"logicbomb": {
+		"name": "LogicBomb",
+		"desc": "Self-destructing attack program",
+		"speed": 3,
+		"max_size": 6,
+		"color": "#0090fc",
+		"commands": [
+			{
+				"name": "Selfdestruct",
+				"range": 1,
+				"target": {
+					"size": -10
+				},
+				"self": {
+					"size": -9999
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 6,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"fiddle": {
+		"name": "Fiddle",
+		"desc": "Twiddle and Tweak the power of your programs",
+		"speed": 3,
+		"max_size": 3,
+		"color": "#0090fc",
+		"commands": [
+			{
+				"name": "Tweak",
+				"target": {
+					"speed": 1
+				},
+				"self": {
+					"size": -1
+				}
+			},{
+				"name": "Twiddle",
+				"range": 1,
+				"target": {
+					"max_size": 1
+				},
+				"self": {
+					"size": -1
+				}
+			}
+		]
+	},
+	"satellite": {
+		"name": "Satellite",
+		"desc": "Sort-rang hard-hitting program",
+		"speed": 1,
+		"max_size": 1,
+		"color": "#00fccb",
+		"commands": [
+			{
+				"name": "Scramble",
+				"range": 2,
+				"target": {
+					"size": -4
+				}
+			}
+		]
+	},
+	"laser_satellite": {
+		"name": "Laser Satellite",
+		"desc": "Long-range hard-hitting program",
+		"speed": 2,
+		"max_size": 1,
+		"color": "#00fccb",
+		"commands": [
+			{
+				"name": "Megascramble",
+				"range": 3,
+				"target": {
+					"size": -4
+				}
+			}
+		]
+	},
+	"ballista": {
+		"name": "Ballista",
+		"desc": "Extreme-range attack program",
+		"speed": 1,
+		"max_size": 2,
+		"color": "#00daa5",
+		"commands": [
+			{
+				"name": "Fling",
+				"range": 4,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"catapult": {
+		"name": "Catapult",
+		"desc": "Extreme-range mobile attacker",
+		"speed": 2,
+		"max_size": 3,
+		"color": "#00daa5",
+		"commands": [
+			{
+				"name": "Fling",
+				"range": 4,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"memory_hog": {
+		"name": "Memory Hog",
+		"desc": "Massive memory-filling bloatware",
+		"speed": 5,
+		"max_size": 30,
+		"color": "#b6fb00",
+		"commands": []
+	},
+	"wizard": {
+		"name": "Wizard",
+		"desc": "Pay no attention to the man behind the curtain",
+		"speed": 3,
+		"max_size": 4,
+		"color": "#01fc95",
+		"commands": [
+			{
+				"name": "Scorch",
+				"range": 3,
+				"target": {
+					"size": -2
+				}
+			},{
+				"name": "Stretch",
+				"range": 2,
+				"target": {
+					"max_size": 1
+				}
+			}
+		]
+	},
+	"sumo": {
+		"name": "Sumo",
+		"desc": "A massive and slow-moving powerhouse",
+		"speed": 2,
+		"max_size": 12,
+		"color": "#b6fc01",
+		"commands": [
+			{
+				"name": "Dataslam",
+				"range": 1,
+				"target": {
+					"size": -8
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 6,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"guru": {
+		"name": "Guru",
+		"desc": "Multipurpose software for the l33tist of the l33t",
+		"speed": 2,
+		"max_size": 3,
+		"color": "#04facb",
+		"commands": [
+			{
+				"name": "Fire",
+				"range": 2,
+				"target": {
+					"size": -4
+				}
+			},{
+				"name": "Ice",
+				"range": 2,
+				"target": {
+					"speed": -3
+				}
+			}
+		]
+	}
+}

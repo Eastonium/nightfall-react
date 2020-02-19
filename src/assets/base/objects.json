@@ -1,0 +1,14 @@
+{
+	"upload_zone": {
+		"name": "Upload Zone",
+		"desc": "Upload your programs here"
+	},
+	"credits": {
+		"name": "Credits",
+		"desc": "Pick this up for extra cash"
+	},
+	"data_item": {
+		"name": "Data Item",
+		"desc": "Collect this to win the battle"
+	}
+}

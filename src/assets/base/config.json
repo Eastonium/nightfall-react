@@ -1,0 +1,10 @@
+{
+	"id": "base",
+	"programs": [
+		"programs/ally_programs",
+		"programs/enemy_programs"
+	],
+	"objects": [
+		"objects"
+	]
+}

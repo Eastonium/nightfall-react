@@ -1,0 +1,26 @@
+{
+	"template": {
+		"name": "",
+		"desc": "",
+		"move": 1,
+		"max_size": 1,
+		"color": "#000000",
+		"commands": [
+			{
+				"name": "",
+				"range": 1,
+				"target": {
+					"size": -1
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 1,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	}
+}

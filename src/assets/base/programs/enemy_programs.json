@@ -1,0 +1,317 @@
+{
+	"sentinel": {
+		"name": "Sentinel",
+		"desc": "Corporate data defender",
+		"speed": 1,
+		"max_size": 3,
+		"color": "#fc9800",
+		"commands": [
+			{
+				"name": "Cut",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"sentinel_2": {
+		"name": "Sentinel 2.0",
+		"desc": "Improved corporate data defender",
+		"speed": 2,
+		"max_size": 4,
+		"color": "#fc9800",
+		"commands": [
+			{
+				"name": "Cut",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"sentinel_3": {
+		"name": "Sentinel 3.0",
+		"desc": "Top of the line in corporate data defense",
+		"alt_desc": "Sentinel that attacks several programs at once",
+		"speed": 2,
+		"max_size": 4,
+		"color": "#fc9800",
+		"commands": [
+			{
+				"name": "Taser",
+				"range": 1,
+				"target": {
+					"size": -4
+				}
+			}
+		]
+	},
+	"watchman": {
+		"name": "Watchman",
+		"desc": "Corporate ranged attack program",
+		"alt_desc": "Basic ranged attack program",
+		"speed": 1,
+		"max_size": 2,
+		"color": "#ff258a",
+		"commands": [
+			{
+				"name": "Phaser",
+				"range": 2,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"watchman_x": {
+		"name": "Watchman X",
+		"desc": "Improved version of Watchman",
+		"speed": 1,
+		"max_size": 4,
+		"color": "#ff258a",
+		"commands": [
+			{
+				"name": "Phaser",
+				"range": 2,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"watchman_sp": {
+		"name": "Watchman SP",
+		"desc": "Qui custodiet ipsos custodes?",
+		"alt_desc": "Watching from an even greater distance",
+		"speed": 1,
+		"max_size": 4,
+		"color": "#ff258a",
+		"commands": [
+			{
+				"name": "Photon",
+				"range": 3,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"guard_pup": {
+		"name": "Guard Pup",
+		"desc": "A speedy little corporate cur",
+		"speed": 3,
+		"max_size": 2,
+		"color": "#fcbb00",
+		"commands": [
+			{
+				"name": "Byte",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"guard_dog": {
+		"name": "Guard Dog",
+		"desc": "Who let the dogs out?",
+		"speed": 3,
+		"max_size": 3,
+		"color": "#fcbb00",
+		"commands": [
+			{
+				"name": "Byte",
+				"range": 1,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"attack_dog": {
+		"name": "Attack Dog",
+		"desc": "Ravenous and bloodthirsty corporate canine",
+		"speed": 4,
+		"max_size": 7,
+		"color": "#fcbb00",
+		"commands": [
+			{
+				"name": "Megabyte",
+				"range": 1,
+				"target": {
+					"size": -3
+				}
+			}
+		]
+	},
+	"warden": {
+		"name": "Warden",
+		"desc": "Slow and steady corporate attack program",
+		"speed": 1,
+		"max_size": 5,
+		"color": "#fc0010",
+		"commands": [
+			{
+				"name": "Thump",
+				"range": 1,
+				"target": {
+					"size": -3
+				}
+			}
+		]
+	},
+	"warden+": {
+		"name": "Warden+",
+		"desc": "Get out of its way",
+		"speed": 2,
+		"max_size": 6,
+		"color": "#fc0010",
+		"commands": [
+			{
+				"name": "Bash",
+				"range": 1,
+				"target": {
+					"size": -5
+				}
+			}
+		]
+	},
+	"warden++": {
+		"name": "Warden++",
+		"desc": "The last word in corporate security",
+		"speed": 3,
+		"max_size": 7,
+		"color": "#fc0010",
+		"commands": [
+			{
+				"name": "Crash",
+				"range": 1,
+				"target": {
+					"size": -7
+				}
+			}
+		]
+	},
+	"sensor": {
+		"name": "Sensor",
+		"desc": "Immobile program eradicator",
+		"speed": 0,
+		"max_size": 1,
+		"color": "#fcf101",
+		"commands": [
+			{
+				"name": "Blip",
+				"range": 5,
+				"target": {
+					"size": -1
+				}
+			}
+		]
+	},
+	"radar": {
+		"name": "Radar",
+		"desc": "Deadly program eradicator",
+		"speed": 0,
+		"max_size": 1,
+		"color": "#fcf101",
+		"commands": [
+			{
+				"name": "Pong",
+				"range": 5,
+				"target": {
+					"size": -2
+				}
+			}
+		]
+	},
+	"sonar": {
+		"name": "Sonar",
+		"desc": "Long-range program eradicator",
+		"speed": 0,
+		"max_size": 1,
+		"color": "#fcf101",
+		"commands": [
+			{
+				"name": "Ping",
+				"range": 8,
+				"target": {
+					"size": -1
+				}
+			}
+		]
+	},
+	"fire_wall": {
+		"name": "Fire Wall",
+		"desc": "Keeps unwanted programs out of corporate sectors",
+		"speed": 2,
+		"max_size": 20,
+		"color": "#fc6200",
+		"commands": [
+			{
+				"name": "Burn",
+				"range": 1,
+				"target": {
+					"size": -1
+				}
+			}
+		]
+	},
+	"boss": {
+		"name": "Boss",
+		"desc": "Prepare to be owned",
+		"speed": 6,
+		"max_size": 25,
+		"color": "#fc6200",
+		"commands": [
+			{
+				"name": "Shutdown",
+				"range": 5,
+				"target": {
+					"size": -5
+				}
+			}
+		]
+	},
+	"sumo": {
+		"name": "Sumo",
+		"desc": "A massive and slow-moving powerhouse",
+		"speed": 2,
+		"max_size": 12,
+		"color": "#cd7ffd",
+		"commands": [
+			{
+				"name": "Dataslam",
+				"range": 1,
+				"target": {
+					"size": -8
+				},
+				"req": [
+					{
+						"target": "self",
+						"attribute": "size",
+						"value": 6,
+						"operator": "ge"
+					}
+				]
+			}
+		]
+	},
+	"mandelbug": {
+		"name": "MandelBug",
+		"desc": "Tiny but packs a big sting",
+		"speed": 5,
+		"max_size": 1,
+		"color": "#fc00f9",
+		"commands": [
+			{
+				"name": "Fractal Glitch",
+				"range": 1,
+				"target": {
+					"size": -4
+				}
+			}
+		]
+	}
+}

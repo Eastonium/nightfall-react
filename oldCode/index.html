@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Spybot: The Nightfall Incident</title>
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js/d3.min.js"></script>
+
+	<script type="text/javascript" src="js/nightfall.js"></script>
+	<link rel="stylesheet" type="text/css" href="sheet.css">
+</head>
+<body>
+	<svg style="position: fixed; visibility: hidden;"><defs>
+		<path id="l1" d="M3 3 h27 v27 h-27 z"/>
+		<path id="l2" d="M3 3 h28 v1 h1 v1 h1 v28 h-28 v-1 h-1 v-1 h-1 z"/>
+		<path id="l2_alt" d="M3 3 h27 l3 3 v27 h-27 l-3 -3 z"/>
+		<path id="E_l1" d="M29 12 h7 v9 h-7 z"/>
+		<path id="E_l2" d="M32 15 h7 v9 h-7 z"/> 
+		<path id="S_l1" d="M13 29 h7 v7 h-7 z"/>
+		<path id="S_l2" d="M16 32 h7 v7 h-7 z"/>
+		<!-- <circle class="img-clip" cx="16" cy="16" r="13.5"/> -->
+	</defs></svg>
+	<div class="battle window">
+		<div class="header"><span class="title">databattle in progress</span><span style="float: right;"><button>LOG OUT</button></span></div>
+		<div class="content"><svg width="100%" height="100%"></svg></div>
+	</div> 
+
+</body>
+</html>
