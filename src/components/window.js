@@ -98,6 +98,8 @@ const styles = {
 		}
 	`,
 	content: css`
+		font-family: "04b_25";
+		font-size: 12px;
 		flex: 1 1 auto;
 		border: solid #000;
 		border-width: 1px 0;
