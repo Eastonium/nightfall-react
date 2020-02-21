@@ -1,5 +1,16 @@
+@font-face {
+  font-family: "BitLight";
+  src: url("/fonts/BitLight10.ttf");
+}
+@font-face {
+  font-family: "04b_25";
+  src: url("/fonts/04b_25.otf");
+}
+
 * {
   box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 :focus {
@@ -15,10 +26,8 @@ body {
   width: 100%;
   height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: "BitLight";
+  font-size: 10px;
 }
 
 button {
@@ -26,11 +35,6 @@ button {
   border: 0;
   border-radius: 0;
   padding: 0;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 #root {

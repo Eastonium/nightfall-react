@@ -45,7 +45,6 @@ const styles = {
 	bar: css`
 		flex: 0 0 auto;
 		display: flex;
-		font-size: 8px;
 		height: 17px;
 		border-top: 1px solid rgba(255,255,255,0.66);
 		border-left: 1px solid rgba(255,255,255,0.33);
@@ -85,7 +84,6 @@ const styles = {
 		
 		button {
 			flex: 0 0 auto;
-			font-size: 7px;
 			height: 12px;
 			margin: 0 1px 1px;
 			border: 1px solid #FFF;
@@ -103,10 +101,14 @@ const styles = {
 		flex: 1 1 auto;
 		border: solid #000;
 		border-width: 1px 0;
+		padding: 2px;
 		background: linear-gradient(rgba(0,0,0,0.5), transparent);
-	`,
+		box-shadow: inset 0 0 0 1px #787878, inset 0 0 0 2px #999;
+		`,
 	footer: css`
-		height: 3px;
+		height: 5px;
+		margin: 0;
+		border: 0;
 		border-top: 2px solid #FFF;
 		background: linear-gradient(90deg, #8A8A8A, #000);
 	`,

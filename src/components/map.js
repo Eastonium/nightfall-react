@@ -8,7 +8,9 @@ import { Window } from './window';
 export const Map = memo(function Map() {
 	return (
 		<div css={styles.map}>
-			<Window title="test" titleBarButtonProps={{ children: "log out" }} />
+			<Window title="test" titleBarButtonProps={{ children: "log out" }}>
+				test
+			</Window>
 		</div>
 	)
 });
