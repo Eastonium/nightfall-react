@@ -11,6 +11,8 @@
   box-sizing: border-box;
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
+  line-height: 1em;
 }
 
 :focus {
@@ -28,6 +30,8 @@ body {
   margin: 0;
   font-family: "BitLight";
   font-size: 10px;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
 }
 
 button {
@@ -35,6 +39,7 @@ button {
   border: 0;
   border-radius: 0;
   padding: 0;
+  background: none;
 }
 
 #root {

@@ -78,7 +78,7 @@ const styles = {
 			
 			&.title {
 				flex-basis: 90px;
-				padding: 2px 30px 2px 4px;
+				padding: 5px 30px 0 4px;
 			}
 		}
 		
@@ -89,12 +89,17 @@ const styles = {
 			border: 1px solid #FFF;
 			border-right-color: #787878;
 			border-bottom-color: #787878;
-			padding: 0 13px;
+			padding: 1px 13px;
 			box-shadow: 0 0 0 1px #000;
 			background: linear-gradient(#FFF, #C6C6C6);
+			color: #000;
 			text-shadow: 1px 1px #FFF;
 			text-transform: uppercase;
 			cursor: pointer;
+
+			&:hover, &:focus {
+				transform: translate(1px, 1px);
+			}
 		}
 	`,
 	content: css`
