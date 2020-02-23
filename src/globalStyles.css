@@ -1,4 +1,8 @@
 @font-face {
+  font-family: "Abstract";
+  src: url("/fonts/Abstract.ttf");
+}
+@font-face {
   font-family: "BitLight";
   src: url("/fonts/BitLight10.ttf");
 }

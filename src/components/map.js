@@ -4,13 +4,17 @@ import { css, jsx } from '@emotion/core';
 
 import MapImage from 'assets/base/textures/maps/map.png';
 import { Window } from './window';
-import { Button } from './button';
+import { Button, MetalButton } from './button';
 
 export const Map = memo(function Map() {
 	return (
 		<div css={styles.map}>
-			<Window title="test" titleBarButtonProps={{ children: "log out" }}>
-				<Button>test</Button>
+			<Window
+				title="test AV"
+				titleBarButtonProps={{ children: "log out" }}
+				postFooter={<MetalButton>Test start</MetalButton>}
+			>
+				<Button>test V</Button>
 			</Window>
 		</div>
 	)
