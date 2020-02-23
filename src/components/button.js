@@ -18,8 +18,8 @@ const getGradientColors = (color, active) => [
 ];
 
 export const Button = Object.assign(
-	memo(function Button({ color = buttonColors.blue, big, fill, children, ...props }) {
-		return <button css={styles.primaryButton(color, big, fill)} {...props}><span {...{ children }} /></button>
+	memo(function Button({ bold, color = buttonColors.blue, big, fill, children, ...props }) {
+		return <button css={styles.primaryButton(bold, color, big, fill)} {...props}><span {...{ children }} /></button>
 	}),
 	{ colors: buttonColors },
 );
@@ -29,7 +29,8 @@ export const MetalButton = memo(function MetalButton({ dark, small, fill, ...pro
 });
 
 const styles = {
-	primaryButton: (color, big, fill) => css`
+	primaryButton: (bold, color, big, fill) => css`
+		${bold ? Fonts.O4b_25 : ""}
 		${fill ? "display: block; width: -webkit-fill-available;" : ""}
 		border: 1px solid;
 		border-image: linear-gradient(135deg, #BBB, #000) 1;

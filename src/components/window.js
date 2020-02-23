@@ -3,6 +3,8 @@ import React, { useState, useEffect, useMemo, memo } from 'react';
 import { css, jsx } from '@emotion/core';
 import classNames from 'classnames';
 
+import * as Fonts from 'fonts';
+
 export const Window = memo(function Window({
 	size, resizable, children, postFooter,
 	title, titleBarIcon, titleBarButtonProps,
@@ -81,7 +83,7 @@ const styles = {
 			
 			&.title {
 				flex-basis: 90px;
-				padding: 5px 30px 0 4px;
+				padding: 4px 30px 0 4px;
 			}
 		}
 		
@@ -110,8 +112,6 @@ const styles = {
 		}
 	`,
 	content: css`
-		font-family: "04b_25";
-		font-size: 12px;
 		flex: 1 1 auto;
 		padding: 2px;
 		background: linear-gradient(#0008, transparent);
