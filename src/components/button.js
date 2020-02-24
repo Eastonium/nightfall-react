@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import Color from 'color';
@@ -18,26 +18,36 @@ const getGradientColors = (color, active) => [
 ];
 
 export const Button = Object.assign(
-	memo(function Button({ bold, color = buttonColors.blue, big, fill, children, ...props }) {
-		return <button css={styles.primaryButton(bold, color, big, fill)} {...props}><span {...{ children }} /></button>
-	}),
+	({ bold, color = buttonColors.blue, big, fill, children, wrapperProps, ...props }) => (
+		<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
+			<button css={styles.primaryButton(bold, color, big)} {...props}>
+				<span {...{ children }} />
+			</button>
+		</div>
+	),
 	{ colors: buttonColors },
 );
 
-export const MetalButton = memo(function MetalButton({ dark, small, fill, ...props }) {
-	return <button css={styles.metalButton(dark, small, fill)} {...props} />
-});
+export const MetalButton = ({ dark, small, fill, wrapperProps, ...props }) => (
+	<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
+		<button css={styles.metalButton(dark, small)} {...props} />
+	</div>
+);
 
 const styles = {
-	primaryButton: (bold, color, big, fill) => css`
+	buttonWrapper: fill => css`
+		display: ${fill ? "" : "inline-"}block;
+	`,
+	primaryButton: (bold, color, big) => css`
 		${bold ? Fonts.O4b_25 : ""}
-		${fill ? "display: block; width: -webkit-fill-available;" : ""}
+		width: 100%;
 		border: 1px solid;
 		border-image: linear-gradient(135deg, #BBB, #000) 1;
 		padding: 1px;
 		box-shadow: inset 0 0 0 1px #444;
 		color: #FFF;
-
+		text-transform: ${bold ? "lowercase" : "uppercase"};
+		
 		> span {
 			display: flex;
 			justify-content: center;
@@ -62,11 +72,11 @@ const styles = {
 			background: linear-gradient(to bottom right, #666, #222);
 		}
 	`,
-	metalButton: (dark, small, fill) => css`
+	metalButton: (dark, small) => css`
 		position: relative;
 		${Fonts.Abstract};
 		${small ? "font-size: 8px;" : ""}
-		${fill ? "display: block; width: -webkit-fill-available;" : ""}
+		width: 100%;
 		height: ${small ? "12px" : "20px"};
 		padding: ${small ? "0 8px 1px 7px" : "0 10px 1px 9px"};
 		border-width: 1px 0 0 1px;
