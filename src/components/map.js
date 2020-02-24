@@ -10,13 +10,16 @@ export const Map = memo(function Map() {
 	return (
 		<div css={styles.map}>
 			<Button bold>Continue with Databattle</Button>
+			<br />
 			<Window
 				title="databattle.result"
 				// titleBarButtonProps={{ children: "log out" }}
-				// postFooter={<MetalButton>start</MetalButton>}
+				postFooter={<Button>start</Button>}
 			>
-				<Button bold fill color={Button.colors.cyan}>Continue with Databattle</Button>
+				<Button bold fill>Continue with Databattle</Button>
 				<Button bold fill color={Button.colors.cyan}>Log Out</Button>
+				<Button bold fill color={Button.colors.green}>Log Out</Button>
+				<Button bold fill color={Button.colors.red}>Log Out</Button>
 			</Window>
 		</div>
 	)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import Color from 'color';
@@ -6,22 +6,22 @@ import Color from 'color';
 import * as Fonts from 'fonts';
 
 const buttonColors = {
-	blue: "#053FF4",
-	cyan: "#09C0FD",
+	blue: "#1348E7",
+	cyan: "#0088CC",
 	green: "#3cd515",
 	red: "#F5042F",
 }
 
 const getGradientColors = (color, active) => [
-	Color(color).desaturate(active ? 0 : 0.65).hex(),
-	Color(color).desaturate(active ? 0 : 0.65).darken(0.8).hex(),
+	Color(color).desaturate(active ? 0 : 0.5).hex(),
+	Color(color).desaturate(active ? 0 : 0.5).darken(0.8).hex(),
 ];
 
 export const Button = Object.assign(
 	({ bold, color = buttonColors.blue, big, fill, children, wrapperProps, ...props }) => (
 		<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
 			<button css={styles.primaryButton(bold, color, big)} {...props}>
-				<span {...{ children }} />
+				<span>{children}</span>
 			</button>
 		</div>
 	),
@@ -42,9 +42,9 @@ const styles = {
 		${bold ? Fonts.O4b_25 : ""}
 		width: 100%;
 		border: 1px solid;
-		border-image: linear-gradient(135deg, #BBB, #000) 1;
+		border-image: linear-gradient(to bottom right, #FFF, #AAA 10%, #222 85%) 1;
 		padding: 1px;
-		box-shadow: inset 0 0 0 1px #444;
+		box-shadow: inset 0 0 0 1px #666;
 		color: #FFF;
 		text-transform: ${bold ? "lowercase" : "uppercase"};
 		
@@ -54,7 +54,7 @@ const styles = {
 			align-items: center;
 			height: ${big ? 24 : 16}px;
 			border: 1px solid;
-			border-image: linear-gradient(-45deg, #AAA, #000) 1;
+			border-image: linear-gradient(to top left, #EEE, #999 10%, #111 85%) 1;
 			padding: 0 12px;
 			background: linear-gradient(to bottom right, ${getGradientColors(color, false).join(", ")});
 		}

@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useMemo, memo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import classNames from 'classnames';
 
-import * as Fonts from 'fonts';
-
-export const Window = memo(function Window({
+export const Window = ({
 	size, resizable, children, postFooter,
 	title, titleBarIcon, titleBarButtonProps,
-}) {
+}) => {
 	const dynamicStyles = useMemo(() => ({
 		// width: 650,
 		// height: 420,
@@ -35,14 +33,15 @@ export const Window = memo(function Window({
 			{postFooter && <div>{postFooter}</div>}
 		</div>
 	);
-});
+};
+
 const styles = {
 	window: css`
 		position: relative;
 		vertical-align: top;
 
-		top: 100px;
-		left: 100px;
+		top: 50px;
+		left: 50px;
 
 		display: inline-flex;
 		flex-direction: column;
