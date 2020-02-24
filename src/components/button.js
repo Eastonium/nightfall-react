@@ -18,13 +18,13 @@ const getGradientColors = (color, active) => [
 ];
 
 export const Button = Object.assign(
-	({ bold, color = buttonColors.blue, big, fill, children, wrapperProps, ...props }) => (
-		<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
+	function Button({ bold, color = buttonColors.blue, big, fill, children, wrapperProps, ...props }) {
+		return <div css={styles.buttonWrapper(fill)} {...wrapperProps}>
 			<button css={styles.primaryButton(bold, color, big)} {...props}>
 				<span>{children}</span>
 			</button>
-		</div>
-	),
+		</div>;
+	},
 	{ colors: buttonColors },
 );
 

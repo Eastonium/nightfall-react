@@ -16,7 +16,12 @@ export const Map = memo(function Map() {
 				// titleBarButtonProps={{ children: "log out" }}
 				postFooter={<Button>start</Button>}
 			>
-				<Button bold fill>Continue with Databattle</Button>
+				<Window.Section>
+					<br />
+					<br />
+					<br />
+				</Window.Section>
+				{/* <Button bold fill>Continue with Databattle</Button> */}
 				<Button bold fill color={Button.colors.cyan}>Log Out</Button>
 				<Button bold fill color={Button.colors.green}>Log Out</Button>
 				<Button bold fill color={Button.colors.red}>Log Out</Button>

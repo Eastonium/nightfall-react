@@ -3,37 +3,42 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { css, jsx } from '@emotion/core';
 import classNames from 'classnames';
 
-export const Window = ({
-	size, resizable, children, postFooter,
-	title, titleBarIcon, titleBarButtonProps,
-}) => {
-	const dynamicStyles = useMemo(() => ({
-		// width: 650,
-		// height: 420,
-		resize: resizable ? "both" : "none",
-	}), [size, resizable]);
+const ContentSection = props => <div css={styles.contentSection} {...props} />;
 
-	return (
-		<div css={styles.window} style={dynamicStyles}>
-			<div>
-				<div css={styles.bar} className={classNames({ "has-icon": !!titleBarIcon })}>
-					{titleBarIcon && <img {...titleBarIcon} />}{/* eslint-disable-line jsx-a11y/alt-text */}
-					{title && <div className="title">{title}</div>}
-					{titleBarButtonProps && (
-						<div css={styles.barButtonContainer}>
-							<button {...titleBarButtonProps} />
-						</div>
-					)}
+/* eslint-disable jsx-a11y/alt-text */
+export const Window = Object.assign(
+	function Window({ title, titleBarIcon, titleBarButtonProps, size, resizable, sectioned, children, postFooter }) {
+		const dynamicStyles = useMemo(() => ({
+			// width: 650,
+			// height: 420,
+			resize: resizable ? "both" : "none",
+		}), [size, resizable]);
+
+		return (
+			<div css={styles.window} style={dynamicStyles}>
+				<div>
+					<div css={styles.bar} className={classNames({ "has-icon": !!titleBarIcon })}>
+						{titleBarIcon && <img {...titleBarIcon} />}
+						{title && <div className="title">{title}</div>}
+						{titleBarButtonProps && (
+							<div css={styles.barButtonContainer}>
+								<button {...titleBarButtonProps} />
+							</div>
+						)}
+					</div>
 				</div>
+				{children && <>
+					<div css={styles.content}>
+						{sectioned ? React.Children.map(children, child => <ContentSection children={child} />) : children}
+					</div>
+					<div css={styles.footer} />
+				</>}
+				{postFooter && <div>{postFooter}</div>}
 			</div>
-			{children && <>
-				<div css={styles.content} {...{ children }} />
-				<div css={styles.footer} />
-			</>}
-			{postFooter && <div>{postFooter}</div>}
-		</div>
-	);
-};
+		);
+	},
+	{ Section: ContentSection },
+);
 
 const styles = {
 	window: css`
@@ -66,7 +71,7 @@ const styles = {
 		&.has-icon {
 			padding-left: 0;
 		}
-		
+
 		> div {
 			flex: 0 0 auto;
 			display: inline-block;
@@ -79,13 +84,12 @@ const styles = {
 			color: #FFF;
 			overflow: hidden;
 			white-space: nowrap;
-			
+
 			&.title {
 				flex-basis: 90px;
 				padding: 4px 30px 0 4px;
 			}
 		}
-		
 	`,
 	barButtonContainer: css`
 		float: right;
@@ -112,10 +116,14 @@ const styles = {
 	`,
 	content: css`
 		flex: 1 1 auto;
-		padding: 2px;
 		background: linear-gradient(#0008, transparent);
-		box-shadow: inset 0 0 0 1px #777, inset 0 0 0 2px #999;
 		`,
+	contentSection: css`
+		margin: 1px;
+		border: 1px solid;
+		border-image: linear-gradient(to top left, #FFF, #BBB 10%, #444 70%) 1;
+		box-shadow: 0 0 0 1px #777;
+	`,
 	footer: css`
 		height: 5px;
 		border-top: 2px solid #FFF;
