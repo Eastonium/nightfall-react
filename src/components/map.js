@@ -14,7 +14,7 @@ export const Map = memo(function Map() {
 			<Window
 				title="databattle.result"
 				// titleBarButtonProps={{ children: "log out" }}
-				postFooter={<Button>start</Button>}
+				postFooter={<MetalButton fill>start</MetalButton>}
 			>
 				<Window.Section>
 					<br />

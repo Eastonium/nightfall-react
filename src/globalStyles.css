@@ -36,6 +36,7 @@ body {
   font-size: 10px;
   font-smooth: never;
   -webkit-font-smoothing: none;
+  background: #000;
 }
 
 button {
