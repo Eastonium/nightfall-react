@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import classNames from 'classnames';
 
 const ContentSection = props => <div css={styles.contentSection} {...props} />;
 
@@ -17,7 +16,7 @@ export const Window = Object.assign(
 		return (
 			<div css={styles.window} style={dynamicStyles}>
 				<div>
-					<div css={styles.bar} className={classNames({ "has-icon": !!titleBarIcon })}>
+					<div css={styles.bar} className={titleBarIcon ? "has-icon" : ""}>
 						{titleBarIcon && <img {...titleBarIcon} />}
 						{title && <div className="title">{title}</div>}
 						{titleBarButtonProps && (
