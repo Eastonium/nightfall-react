@@ -2,19 +2,31 @@ import React, { useState, useEffect, useMemo } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const ContentSection = props => <div css={styles.contentSection} {...props} />;
+const ContentSection = ({ ...props }) => (
+	<div css={styles.contentSection} {...props}>
+		{/* <div>{children}</div> */}
+	</div>
+);
+
+export const WindowContainer = ({ coverScreen, ...props}) => (
+	<div css={styles.windowContainer(coverScreen)} {...props} />
+);
 
 /* eslint-disable jsx-a11y/alt-text */
 export const Window = Object.assign(
-	function Window({ title, titleBarIcon, titleBarButtonProps, size, resizable, sectioned, children, postFooter }) {
+	function Window({
+		x, y, width, height,
+		title, titleBarIcon, titleBarButtonProps, sectioned, children, postFooter,
+		...props
+	}) {
 		const dynamicStyles = useMemo(() => ({
-			// width: 650,
-			// height: 420,
-			resize: resizable ? "both" : "none",
-		}), [size, resizable]);
-
+			[x > 0 ? 'top' : 'bottom']: Math.abs(x),
+			[y > 0 ? 'left' : 'right']: Math.abs(y),
+			width,
+			height
+		}), [x, y, width, height]);
 		return (
-			<div css={styles.window} style={dynamicStyles}>
+			<div css={styles.window} style={dynamicStyles} className="Window" {...props}>
 				<div>
 					<div css={styles.bar} className={titleBarIcon ? "has-icon" : ""}>
 						{titleBarIcon && <img {...titleBarIcon} />}
@@ -28,7 +40,9 @@ export const Window = Object.assign(
 				</div>
 				{children && <>
 					<div css={styles.content}>
-						{sectioned ? React.Children.map(children, child => <ContentSection children={child} />) : children}
+						{sectioned
+							? React.Children.map(children, child => <ContentSection children={child} />)
+							: children}
 					</div>
 					<div css={styles.footer} />
 				</>}
@@ -40,18 +54,28 @@ export const Window = Object.assign(
 );
 
 const styles = {
-	window: css`
-		position: relative;
-		vertical-align: top;
+	windowContainer: coverScreen => css`
+		position: ${coverScreen ? 'fixed' : 'relative'};
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
 
-		top: 50px;
-		left: 50px;
+		> .Window {
+			position: absolute;
+		}
+	`,
+	window: css`
+		vertical-align: top;
 
 		display: inline-flex;
 		flex-direction: column;
 		min-width: 126px;
 		border: solid #000;
 		border-width: 0 1px;
+
+		pointer-events: all;
 
 		> div {
 			border-bottom: 1px solid #000;
@@ -79,7 +103,7 @@ const styles = {
 			border: 1px solid #DDD;
 			border-top: 0;
 			border-left-color: #555;
-			background: linear-gradient(#52597D, #282E40);
+			background: linear-gradient(#282E40, #52597D);
 			color: #FFF;
 			overflow: hidden;
 			white-space: nowrap;
@@ -100,7 +124,7 @@ const styles = {
 			border: 1px solid #FFF;
 			border-right-color: #777;
 			border-bottom-color: #777;
-			padding: 1px 13px;
+			padding: 0 13px;
 			color: #000;
 			text-shadow: 1px 1px #FFF;
 			text-transform: uppercase;
@@ -115,9 +139,11 @@ const styles = {
 	`,
 	content: css`
 		flex: 1 1 auto;
+		display: flex;
 		background: linear-gradient(#0008, transparent);
-		`,
+	`,
 	contentSection: css`
+		flex: 1 1 auto;
 		margin: 1px;
 		border: 1px solid;
 		border-image: linear-gradient(to top left, #FFF, #BBB 10%, #444 70%) 1;
