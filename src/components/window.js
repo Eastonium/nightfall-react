@@ -110,7 +110,7 @@ const styles = {
 
 			&.title {
 				flex-basis: 90px;
-				padding: 4px 30px 0 4px;
+				padding: 3px 30px 0 4px;
 			}
 		}
 	`,
