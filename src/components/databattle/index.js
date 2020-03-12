@@ -57,5 +57,8 @@ const styles = {
 	grid: css`
 		grid-row: 1 / span 2;
 		grid-column: 2;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	`,
 };
