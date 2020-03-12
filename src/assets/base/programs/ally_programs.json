@@ -1,5 +1,5 @@
 {
-	"hack": {
+	"hack_1": {
 		"name": "Hack",
 		"desc": "Basic attack program",
 		"speed": 2,
@@ -91,7 +91,7 @@
 			}
 		]
 	},
-	"seeker": {
+	"seeker_1": {
 		"name": "Seeker",
 		"desc": "Solid distance attack program",
 		"speed": 3,
@@ -156,7 +156,7 @@
 			}
 		]
 	},
-	"bug": {
+	"bug_1": {
 		"name": "Bug",
 		"desc": "Fast, cheap, and out of control",
 		"speed": 5,
@@ -172,7 +172,7 @@
 			}
 		]
 	},
-	"mandelbug": {
+	"bug_2": {
 		"name": "MandelBug",
 		"desc": "It's not a bug, it's a feature",
 		"speed": 5,
@@ -188,7 +188,7 @@
 			}
 		]
 	},
-	"heisenbug": {
+	"bug_3": {
 		"name": "HeisenBug",
 		"desc": "They can't kill what they can't catch",
 		"speed": 5,
@@ -204,7 +204,7 @@
 			}
 		]
 	},
-	"data_doctor": {
+	"data_doctor_1": {
 		"name": "Data Doctor",
 		"desc": "Helps your programs grow",
 		"speed": 4,
@@ -235,7 +235,7 @@
 			}
 		]
 	},
-	"data_doctor_pro": {
+	"data_doctor_2": {
 		"name": "Data Doctor Pro",
 		"desc": "Twice the expansion power of the data doctor",
 		"speed": 5,
@@ -275,7 +275,7 @@
 			}
 		]
 	},
-	"clog_01": {
+	"clog_1": {
 		"name": "Clog.01",
 		"desc": "Slows down hostile programs",
 		"speed": 2,
@@ -291,7 +291,7 @@
 			}
 		]
 	},
-	"clog_02": {
+	"clog_2": {
 		"name": "Clog.02",
 		"desc": "Twice as effective as version.01",
 		"speed": 2,
@@ -307,7 +307,7 @@
 			}
 		]
 	},
-	"clog_03": {
+	"clog_3": {
 		"name": "Clog.03",
 		"desc": "Brings hostile programs to a halt",
 		"speed": 2,
@@ -348,7 +348,7 @@
 			}
 		]
 	},
-	"golem_mud": {
+	"golem_1": {
 		"name": "Golem.mud",
 		"desc": "Slow and steady attack program",
 		"speed": 1,
@@ -364,7 +364,7 @@
 			}
 		]
 	},
-	"golem_clay": {
+	"golem_2": {
 		"name": "Golem.clay",
 		"desc": "Clay is stronger than mud",
 		"speed": 2,
@@ -380,7 +380,7 @@
 			}
 		]
 	},
-	"golem_stone": {
+	"golem_3": {
 		"name": "Golem.stone",
 		"desc": "Nothing can stand in its way",
 		"speed": 3,
@@ -396,7 +396,7 @@
 			}
 		]
 	},
-	"wolf_spider": {
+	"spider_1": {
 		"name": "Wolf Spider",
 		"desc": "Speedy and creepy little program",
 		"speed": 3,
@@ -412,7 +412,7 @@
 			}
 		]
 	},
-	"black_widow": {
+	"spider_2": {
 		"name": "Black Widow",
 		"desc": "Speedier and creepier",
 		"speed": 4,
@@ -434,7 +434,7 @@
 			}
 		]
 	},
-	"tarantula": {
+	"spider_3": {
 		"name": "Tarantula",
 		"desc": "Fast, with a venomous bite",
 		"speed": 5,
@@ -456,7 +456,7 @@
 			}
 		]
 	},
-	"tower": {
+	"tower_1": {
 		"name": "Tower",
 		"desc": "Immobile long-range program",
 		"speed": 0,
@@ -472,7 +472,7 @@
 			}
 		]
 	},
-	"mobile_tower": {
+	"tower_2": {
 		"name": "Mobile Tower",
 		"desc": "Slow-moving, long-range program",
 		"speed": 1,
@@ -488,7 +488,7 @@
 			}
 		]
 	},
-	"turbo": {
+	"turbo_1": {
 		"name": "Turbo",
 		"desc": "Speeds up your programs",
 		"speed": 3,
@@ -507,7 +507,7 @@
 			}
 		]
 	},
-	"turbo_deluxe": {
+	"turbo_2": {
 		"name": "Turbo Deluxe",
 		"desc": "Slow and steady is for losers",
 		"speed": 4,
@@ -534,7 +534,7 @@
 			}
 		]
 	},
-	"buzzbomb": {
+	"bomb_1": {
 		"name": "BuzzBomb",
 		"desc": "Fast and annoying",
 		"speed": 8,
@@ -559,7 +559,7 @@
 			}
 		]
 	},
-	"logicbomb": {
+	"bomb_2": {
 		"name": "LogicBomb",
 		"desc": "Self-destructing attack program",
 		"speed": 3,
@@ -613,7 +613,7 @@
 			}
 		]
 	},
-	"satellite": {
+	"satellite_1": {
 		"name": "Satellite",
 		"desc": "Sort-rang hard-hitting program",
 		"speed": 1,
@@ -629,7 +629,7 @@
 			}
 		]
 	},
-	"laser_satellite": {
+	"satellite_2": {
 		"name": "Laser Satellite",
 		"desc": "Long-range hard-hitting program",
 		"speed": 2,
@@ -645,7 +645,7 @@
 			}
 		]
 	},
-	"ballista": {
+	"fling_1": {
 		"name": "Ballista",
 		"desc": "Extreme-range attack program",
 		"speed": 1,
@@ -661,7 +661,7 @@
 			}
 		]
 	},
-	"catapult": {
+	"fling_2": {
 		"name": "Catapult",
 		"desc": "Extreme-range mobile attacker",
 		"speed": 2,

@@ -1,5 +1,5 @@
 {
-	"sentinel": {
+	"sentinel_1": {
 		"name": "Sentinel",
 		"desc": "Corporate data defender",
 		"speed": 1,
@@ -48,7 +48,7 @@
 			}
 		]
 	},
-	"watchman": {
+	"watchman_1": {
 		"name": "Watchman",
 		"desc": "Corporate ranged attack program",
 		"alt_desc": "Basic ranged attack program",
@@ -65,7 +65,7 @@
 			}
 		]
 	},
-	"watchman_x": {
+	"watchman_2": {
 		"name": "Watchman X",
 		"desc": "Improved version of Watchman",
 		"speed": 1,
@@ -81,7 +81,7 @@
 			}
 		]
 	},
-	"watchman_sp": {
+	"watchman_3": {
 		"name": "Watchman SP",
 		"desc": "Qui custodiet ipsos custodes?",
 		"alt_desc": "Watching from an even greater distance",
@@ -98,7 +98,7 @@
 			}
 		]
 	},
-	"guard_pup": {
+	"dog_1": {
 		"name": "Guard Pup",
 		"desc": "A speedy little corporate cur",
 		"speed": 3,
@@ -114,7 +114,7 @@
 			}
 		]
 	},
-	"guard_dog": {
+	"dog_2": {
 		"name": "Guard Dog",
 		"desc": "Who let the dogs out?",
 		"speed": 3,
@@ -130,7 +130,7 @@
 			}
 		]
 	},
-	"attack_dog": {
+	"dog_3": {
 		"name": "Attack Dog",
 		"desc": "Ravenous and bloodthirsty corporate canine",
 		"speed": 4,
@@ -146,7 +146,7 @@
 			}
 		]
 	},
-	"warden": {
+	"warden_1": {
 		"name": "Warden",
 		"desc": "Slow and steady corporate attack program",
 		"speed": 1,
@@ -162,7 +162,7 @@
 			}
 		]
 	},
-	"warden+": {
+	"warden_2": {
 		"name": "Warden+",
 		"desc": "Get out of its way",
 		"speed": 2,
@@ -178,7 +178,7 @@
 			}
 		]
 	},
-	"warden++": {
+	"warden_3": {
 		"name": "Warden++",
 		"desc": "The last word in corporate security",
 		"speed": 3,
@@ -194,7 +194,7 @@
 			}
 		]
 	},
-	"sensor": {
+	"ping_1": {
 		"name": "Sensor",
 		"desc": "Immobile program eradicator",
 		"speed": 0,
@@ -210,7 +210,7 @@
 			}
 		]
 	},
-	"radar": {
+	"ping_2": {
 		"name": "Radar",
 		"desc": "Deadly program eradicator",
 		"speed": 0,
@@ -226,7 +226,7 @@
 			}
 		]
 	},
-	"sonar": {
+	"ping_3": {
 		"name": "Sonar",
 		"desc": "Long-range program eradicator",
 		"speed": 0,
@@ -298,7 +298,7 @@
 			}
 		]
 	},
-	"mandelbug": {
+	"bug_2": {
 		"name": "MandelBug",
 		"desc": "Tiny but packs a big sting",
 		"speed": 5,

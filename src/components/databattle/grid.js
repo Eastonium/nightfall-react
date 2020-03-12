@@ -2,7 +2,7 @@ import React from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import ProgramIcon from 'assets/base/textures/grid/programs/guard_dog.png';
+import ProgramIcon from 'assets/base/textures/grid/programs/dog_2.png';
 
 const columns = 14;
 const rows = 11;
