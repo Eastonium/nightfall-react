@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
 const ContentSection = ({ ...props }) => (
-	<div css={styles.contentSection} {...props}>
-		{/* <div>{children}</div> */}
-	</div>
+	<div css={styles.contentSection} {...props} />
 );
 
 export const WindowContainer = ({ coverScreen, ...props}) => (
@@ -15,7 +13,7 @@ export const WindowContainer = ({ coverScreen, ...props}) => (
 /* eslint-disable jsx-a11y/alt-text */
 export const Window = Object.assign(
 	function Window({
-		x, y, width, height,
+		x = 0, y = 0, width, height,
 		title, titleBarIcon, titleBarButtonProps, sectioned, children, postFooter,
 		...props
 	}) {

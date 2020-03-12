@@ -8,32 +8,34 @@ import { Grid } from './grid';
 import spybotImage from 'assets/base/textures/spybots/Snaptrax S45.png';
 import { Button } from 'components/button';
 
-export const Databattle = props => (
-	<Window
-		width={600}
-		height={400}
-		title="databattle in progress"
-		titleBarButtonProps={{ children: "log out" }}
-		sectioned
-		{...props}
-	>
-		<div css={styles.layoutContainer}>
-			<Window title="spybot" sectioned>
-				<img src={spybotImage} alt="spybot" style={{ display: "block" }} />
-			</Window>
-			<Window
-				css={styles.programInfoWindow}
-				title="program.info"
-				sectioned
-				postFooter={<Button color="red" fill bold>Undo</Button>}
-			>
-				{' '}
-			</Window>
-			{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
-			<Grid css={styles.grid} />
-		</div>
-	</Window>
-);
+export const Databattle = React.memo(function DataBattle(props) {
+	return (
+		<Window
+			width={600}
+			height={400}
+			title="databattle in progress"
+			titleBarButtonProps={{ children: "log out" }}
+			sectioned
+			{...props}
+		>
+			<div css={styles.layoutContainer}>
+				<Window title="spybot" sectioned>
+					<img src={spybotImage} alt="spybot" style={{ display: "block" }} />
+				</Window>
+				<Window
+					css={styles.programInfoWindow}
+					title="program.info"
+					sectioned
+					postFooter={<Button color="red" fill bold>Undo</Button>}
+				>
+					{' '}
+				</Window>
+				{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
+				<Grid css={styles.grid} />
+			</div>
+		</Window>
+	);
+});
 
 const styles = {
 	layoutContainer: css`

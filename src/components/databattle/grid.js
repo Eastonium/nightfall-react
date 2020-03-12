@@ -94,7 +94,7 @@ export const Grid = props => (
 			{[...Array(columns)].map((_, column) => [...Array(rows)].map((_, row) => {
 				const i = (row * columns) + column;
 				return (
-					<g transform={`translate(${column * size} ${row * size})`}>
+					<g key={i} transform={`translate(${column * size} ${row * size})`}>
 						{!!+cell_state[i] && <Tile />}
 					</g>
 				);
