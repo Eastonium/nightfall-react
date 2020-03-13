@@ -38,6 +38,7 @@ body {
   -webkit-font-smoothing: none;
   image-rendering: pixelated;
   background: #000;
+  color: #FFF;
 }
 
 button {

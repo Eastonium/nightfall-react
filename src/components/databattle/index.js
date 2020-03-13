@@ -11,8 +11,6 @@ import { Button } from 'components/button';
 export const Databattle = React.memo(function DataBattle(props) {
 	return (
 		<Window
-			width={600}
-			height={400}
 			title="databattle in progress"
 			titleBarButtonProps={{ children: "log out" }}
 			sectioned
@@ -40,8 +38,6 @@ export const Databattle = React.memo(function DataBattle(props) {
 const styles = {
 	layoutContainer: css`
 		display: grid;
-		width: 100%;
-		height: 100%;
 		grid-template: auto 1fr / auto 1fr;
 		grid-gap: 4px;
 		padding: 4px;
