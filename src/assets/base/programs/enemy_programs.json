@@ -273,45 +273,5 @@
 				}
 			}
 		]
-	},
-	"sumo": {
-		"name": "Sumo",
-		"desc": "A massive and slow-moving powerhouse",
-		"speed": 2,
-		"max_size": 12,
-		"color": "#cd7ffd",
-		"commands": [
-			{
-				"name": "Dataslam",
-				"range": 1,
-				"target": {
-					"size": -8
-				},
-				"req": [
-					{
-						"target": "self",
-						"attribute": "size",
-						"value": 6,
-						"operator": "ge"
-					}
-				]
-			}
-		]
-	},
-	"bug_2": {
-		"name": "MandelBug",
-		"desc": "Tiny but packs a big sting",
-		"speed": 5,
-		"max_size": 1,
-		"color": "#fc00f9",
-		"commands": [
-			{
-				"name": "Fractal Glitch",
-				"range": 1,
-				"target": {
-					"size": -4
-				}
-			}
-		]
 	}
 }

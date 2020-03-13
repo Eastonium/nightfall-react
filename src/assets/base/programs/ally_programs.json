@@ -174,10 +174,10 @@
 	},
 	"bug_2": {
 		"name": "MandelBug",
-		"desc": "It's not a bug, it's a feature",
+		"desc": ["It's not a bug, it's a feature", "Tiny but packs a big sting"],
 		"speed": 5,
 		"max_size": 1,
-		"color": "#84fc00",
+		"color": ["#84fc00", "#fc00f9"],
 		"commands": [
 			{
 				"name": "Fractal Glitch",
@@ -712,7 +712,7 @@
 		"desc": "A massive and slow-moving powerhouse",
 		"speed": 2,
 		"max_size": 12,
-		"color": "#b6fc01",
+		"color": ["#b6fc01", "#cd7ffd"],
 		"commands": [
 			{
 				"name": "Dataslam",

@@ -1,38 +1,56 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React, { useState, useEffect } from 'react';
 
 import { Map } from 'components/map';
 import { WindowContainer } from  'components/window';
 import { Databattle } from 'components/databattle';
 
-import Configuration from 'assets/base/config.json';
-const load = async () => {
-	const programs = (await Promise.all(
-		Configuration.programs.map(file => import(`assets/base/${file}.json`))
-	)).reduce((programs, module) => Object.assign(programs, module.default), {});
+const loadConfig = async packId => {
+	const config = await import(`assets/${packId}/config.json`);
 
-	const icons = (await Promise.all(
+	const [programData, objectData] = await Promise.all([
+		Promise.all(config.programs.map(file => import(`assets/${packId}/${file}.json`))),
+		Promise.all(config.objects.map(file => import(`assets/${packId}/${file}.json`))),
+	]);
+
+	const programs = programData
+		.reduce((programs, module) => Object.assign(programs, module.default), {});
+	const programIcons = await Promise.all(
 		Object.keys(programs)
-			.map(programKey => import(`assets/base/textures/grid/programs/${programKey}.png`))
-	));
-	Object.keys(programs).forEach((programKey, i) => programs[programKey].icon = icons[i].default);
+			.map(key => import(`assets/${packId}/textures/grid/programs/${key}.png`))
+	);
+	Object.keys(programs).forEach((key, i) => programs[key].icon = programIcons[i].default);
+
+	const objects = objectData
+		.reduce((objects, module) => Object.assign(objects, module.default), {});
+	const objectIcons = await Promise.all(
+		Object.keys(objects)
+			.map(key => import(`assets/${packId}/textures/grid/objects/${key}.png`))
+	);
+	Object.keys(objects).forEach((key, i) => objects[key].icon = objectIcons[i].default);
 	
-	console.log(programs);
+	return { programs, objects };
 };
-load();
 
-export const Game = () => (
-	<div css={styles.main}>
-		<Map />
-		<WindowContainer coverScreen>
-			<Databattle x={40} y={30} />
-		</WindowContainer>
-	</div>
-);
+export const ConfigContext = React.createContext(null);
 
-const styles = {
-	main: css`
-		height: 100%;
-	`,
-};
+export const Game = ({ packId }) => {
+	const [config, setConfig] = useState({});
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		if (config[packId]) return;
+		loadConfig(packId).then(loadedConfig => {
+			setConfig({ ...config, [packId]: loadedConfig });
+			setLoading(false);
+		});
+	}, [packId, config]);
+
+	if (loading) return "Loading...";
+	return (
+		<ConfigContext.Provider value={config}>
+			<Map />
+			<WindowContainer coverScreen>
+				<Databattle x={40} y={30} />
+			</WindowContainer>
+		</ConfigContext.Provider>
+	);
+}

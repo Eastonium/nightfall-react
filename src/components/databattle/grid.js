@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import ProgramIcon from 'assets/base/textures/grid/programs/dog_2.png';
+import { ConfigContext } from 'game';
 
 const columns = 14;
 const rows = 11;
@@ -46,9 +46,9 @@ const object_pos =
 	"           uu " +
 	"              ";
 const object_key = {
-	d: "data_item",
-	c: "credits",
-	u: "upload_zone"
+	d: "base:data_item",
+	c: "base:credits",
+	u: "base:upload_zone"
 }
 
 const program_pos = 
@@ -65,43 +65,47 @@ const program_pos =
 	"              ";
 const program_keys = {
 	A: {
-		type: "guard_dog",
+		type: "base:dog_2",
 		path: [[3,1],[3,2],[3,3],[3,4],[3,5],[3,6]]
 	}, B: {
-		type: "guard_dog",
+		type: "base:dog_2",
 		path: [[2,2]]
 	}, C: {
-		type: "guard_dog",
+		type: "base:dog_2",
 		path: [[0,3]]
 	}, D: {
-		type: "guard_dog",
+		type: "base:dog_2",
 		path: [[1,4]]
 	}, E: {
-		type: "guard_dog",
+		type: "base:dog_2",
 		path: [[2,5]]
 	}, F: {
-		type: "guard_dog",
+		type: "base:dog_2",
 		path: [[1,7]]
 	}, G: {
-		type: "guard_dog",
+		type: "base:dog_2",
 		path: [[13,9],[13,8]]
 	}
 }
 
-export const Grid = props => (
-	<div {...props}>
-		<svg width={columns * size} height={rows * size} css={styles.svg}>
-			{[...Array(columns)].map((_, column) => [...Array(rows)].map((_, row) => {
-				const i = (row * columns) + column;
-				return (
-					<g key={i} transform={`translate(${column * size} ${row * size})`}>
-						{!!+cell_state[i] && <Tile />}
-					</g>
-				);
-			}))}
-		</svg>
-	</div>
-);
+export const Grid = props => {
+	const config = useContext(ConfigContext);
+	console.log(config);
+	return (
+		<div {...props}>
+			<svg width={columns * size} height={rows * size} css={styles.svg}>
+				{[...Array(columns)].map((_, column) => [...Array(rows)].map((_, row) => {
+					const i = (row * columns) + column;
+					return (
+						<g key={i} transform={`translate(${column * size} ${row * size})`}>
+							{!!+cell_state[i] && <Tile />}
+						</g>
+					);
+				}))}
+			</svg>
+		</div>
+	);
+}
 
 const Tile = () => (
 	<rect x={2} y={2} width={size - 4} height={size - 4} fill="none" stroke="#000" />
@@ -110,6 +114,6 @@ const Tile = () => (
 const styles = {
 	svg: css`
 		
-		box-shadow: 0 0 0 1px darkorange;
+		// box-shadow: 0 0 0 1px darkorange;
 	`,
 }
