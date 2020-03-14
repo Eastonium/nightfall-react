@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Map } from 'components/map';
 import { WindowContainer } from  'components/window';
-import { Databattle } from 'components/databattle';
+import { DataBattle } from 'components/databattle';
 
 const loadConfig = async packId => {
 	const config = await import(`assets/${packId}/config.json`);
@@ -31,7 +31,7 @@ const loadConfig = async packId => {
 	return { programs, objects };
 };
 
-export const ConfigContext = React.createContext(null);
+export const PackConfigContext = React.createContext(null);
 
 export const Game = ({ packId }) => {
 	const [config, setConfig] = useState({});
@@ -46,11 +46,11 @@ export const Game = ({ packId }) => {
 
 	if (loading) return "Loading...";
 	return (
-		<ConfigContext.Provider value={config}>
+		<PackConfigContext.Provider value={config}>
 			<Map />
 			<WindowContainer coverScreen>
-				<Databattle x={40} y={30} />
+				<DataBattle x={40} y={30} />
 			</WindowContainer>
-		</ConfigContext.Provider>
+		</PackConfigContext.Provider>
 	);
 }
