@@ -7,7 +7,7 @@ import { ConfigContext } from 'game';
 const columns = 14;
 const rows = 11;
 const size = 32;
-const cell_state = 
+const cellState = (
 	"01110000001110" +
 	"11111000011111" +
 	"11111000011111" +
@@ -18,9 +18,10 @@ const cell_state =
 	"11110000011111" +
 	"11111000011111" +
 	"11111000011111" +
-	"01110000001110";
+	"01110000001110"
+);
 
-const cell_style = 
+const cellStyle = (
 	"00000000000000" +
 	"00000000000000" +
 	"00000000000000" +
@@ -31,89 +32,146 @@ const cell_style =
 	"11111110000000" +
 	"00000000000000" +
 	"00000000000000" +
-	"00000000000000";
+	"00000000000000"
+);
 
-const object_pos = 
-	"              " +
-	"           uu " +
-	" d            " +
-	"              " +
-	"              " +
-	" c            " +
-	"              " +
-	"              " +
-	" c            " +
-	"           uu " +
-	"              ";
-const object_key = {
-	d: "base:data_item",
-	c: "base:credits",
-	u: "base:upload_zone"
-}
+const objects = [
+	{
+		type: "base:data_item",
+		pos: [1, 2],
+	},
+	{
+		type: "base:credits",
+		pos: [1, 5],
+	},
+	{
+		type: "base:credits",
+		pos: [1, 8],
+	},
+	{
+		type: "base:upload_zone",
+		pos: [11, 1],
+	},
+	{
+		type: "base:upload_zone",
+		pos: [12, 1],
+	},
+	{
+		type: "base:upload_zone",
+		pos: [11, 9],
+	},
+	{
+		type: "base:upload_zone",
+		pos: [12, 9],
+	},
+];
+const objectMap = objects.reduce((map, object) => {
+	const [column, row] = object.pos;
+	return Object.assign(map, { [column + row * columns]: object })
+}, []);
 
-const program_pos = 
-	"              " +
-	"   AA         " +
-	"  B A         " +
-	"C   A         " +
-	" D  A         " +
-	"  E           " +
-	"              " +
-	" F            " +
-	"             G" +
-	"             G" +
-	"              ";
-const program_keys = {
-	A: {
+const programs = [
+	{
 		type: "base:dog_2",
-		path: [[3,1],[3,2],[3,3],[3,4],[3,5],[3,6]]
-	}, B: {
+		pos: [[3,1],[3,2],[3,3],[3,4]],
+	},
+	{
 		type: "base:dog_2",
-		path: [[2,2]]
-	}, C: {
+		pos: [[2,2]],
+	},
+	{
 		type: "base:dog_2",
-		path: [[0,3]]
-	}, D: {
+		pos: [[0,3]],
+	},
+	{
 		type: "base:dog_2",
-		path: [[1,4]]
-	}, E: {
+		pos: [[1,4]],
+	},
+	{
 		type: "base:dog_2",
-		path: [[2,5]]
-	}, F: {
+		pos: [[2,5]],
+	},
+	{
 		type: "base:dog_2",
-		path: [[1,7]]
-	}, G: {
-		type: "base:dog_2",
-		path: [[13,9],[13,8]]
-	}
-}
+		pos: [[1,7]],
+	},
+];
+const programMap = programs.reduce((map, program) => (
+	program.pos.reduce((map, [column, row]) => (
+		Object.assign(map, { [column + row * columns]: program })
+	), map)
+), []);
 
 export const Grid = props => {
 	const config = useContext(ConfigContext);
-	console.log(config);
+
 	return (
 		<div {...props}>
 			<svg width={columns * size} height={rows * size} css={styles.svg}>
-				{[...Array(columns)].map((_, column) => [...Array(rows)].map((_, row) => {
-					const i = (row * columns) + column;
-					return (
-						<g key={i} transform={`translate(${column * size} ${row * size})`}>
-							{!!+cell_state[i] && <Tile />}
-						</g>
-					);
-				}))}
+				{[...Array(columns * rows)].map((_, i) => {
+					const column = i % columns;
+					const row = (i - column) / columns;
+					return +cellState[i] ? <Tile key={i} {...{ row, column }} /> : null;
+				})}
+				{objects.map((object, i) => {
+					const [packId, objectId] = object.type.split(":");
+					const { icon } = config[packId].objects[objectId];
+					const [column, row] = object.pos;
+					return <image key={i} x={column * size} y={row * size} href={icon} />;
+				})}
+				{programs.map((program, i) => <Program key={i} {...{ program }} />)}
 			</svg>
 		</div>
 	);
 }
 
-const Tile = () => (
-	<rect x={2} y={2} width={size - 4} height={size - 4} fill="none" stroke="#000" />
+const Tile = ({ row, column }) => (
+	<rect
+		x={2 + column * size} y={2 + row * size}
+		width={size - 4} height={size - 4}
+		fill="none" stroke="#000"
+	/>
 );
 
+const Program = ({ program }) => {
+	const config = useContext(ConfigContext);
+
+	const [packId, programId] = program.type.split(":");
+	const { icon, color } = config[packId].programs[programId];
+	const [headColumn, headRow] = program.pos[0];
+
+	return <g>
+		{program.pos
+			.map(([column, row]) => column + row * columns).sort()
+			.map(i => {
+				const column = i % columns;
+				const row = (i - column) / columns;
+				return (<g key={i} transform={`translate(${column * size} ${row * size})`}>
+					{column + 1 !== columns && programMap[i + 1] === program && (
+						<path
+							css={styles.connector(color)}
+							d={`M${size / 2},${size / 2}h${size}`}
+						/>
+					)}
+					{row + 1 !== rows && programMap[i + columns] === program && (
+						<path
+							css={styles.connector(color)}
+							d={`M${size / 2},${size / 2}v${size}`}
+						/>
+					)}
+					<rect x={2} y={2} width={size - 4} height={size - 4} fill={color} />
+				</g>);
+			})
+		}
+		<image x={headColumn * size} y={headRow * size} href={icon} />
+	</g>;
+};
+
 const styles = {
-	svg: css`
-		
-		// box-shadow: 0 0 0 1px darkorange;
+	svg: css``,
+	connector: color => css`
+		fill: none;
+		stroke: ${color};
+		stroke-width: 8;
 	`,
 }
