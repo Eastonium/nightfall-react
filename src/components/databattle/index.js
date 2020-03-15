@@ -2,11 +2,14 @@ import React from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
+
+
 import { Window } from  'components/window';
 import { Grid } from './grid';
+import { Button } from 'components/button';
 
 import spybotImage from 'assets/base/textures/spybots/Snaptrax S45.png';
-import { Button } from 'components/button';
+import { Position } from './grid/position';
 
 const columns = 14;
 const rows = 11;
@@ -68,7 +71,7 @@ const objects = [
 		type: "base:upload_zone",
 		pos: [12, 9],
 	},
-];
+].map(({ type, pos }) => ({ type, pos: new Position(pos, columns, rows) }));
 
 const programs = [
 	{
@@ -95,7 +98,7 @@ const programs = [
 		type: "base:dog_2",
 		pos: [[1,7]],
 	},
-];
+].map(({ type, pos }) => ({ type, pos: pos.map(pos => new Position(pos, columns, rows)) }));
 
 export const GridContext = React.createContext(null);
 

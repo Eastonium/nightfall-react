@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
@@ -8,7 +8,6 @@ import { GridContext } from '.';
 const size = 32;
 
 export const Grid = ({ cellState, objects, programs, ...props }) => {
-	const packConfig = useContext(PackConfigContext);
 	const { columns, rows } = useContext(GridContext);
 
 	// const objectMap = useMemo(() => (
@@ -34,17 +33,12 @@ export const Grid = ({ cellState, objects, programs, ...props }) => {
 					const row = Math.floor(sectorIndex / columns);
 					return !!+cellState[sectorIndex] && <Tile key={sectorIndex} {...{ column, row }} />;
 				})}
-				{objects.map((object, i) => {
-					const [packId, objectId] = object.type.split(":");
-					const { icon } = packConfig[packId].objects[objectId];
-					const [column, row] = object.pos;
-					return <image key={i} x={column * size} y={row * size} href={icon} />;
-				})}
+				{objects.map((object, i) => <MapObject key={i} {...{ object }} />)}
 				{programs.map((program, i) => <Program key={i} {...{ program }} />)}
 			</svg>
 		</div>
 	);
-}
+};
 
 const Tile = ({ column, row }) => (
 	<rect
@@ -54,26 +48,35 @@ const Tile = ({ column, row }) => (
 	/>
 );
 
+const MapObject = ({ object }) => {
+	const packConfig = useContext(PackConfigContext);
+
+	const [packId, objectId] = object.type.split(":");
+	const { icon } = packConfig[packId].objects[objectId];
+	const { column, row } = object.pos;
+
+	return <image x={column * size} y={row * size} href={icon} />;
+};
+
 const Program = ({ program }) => {
 	const packConfig = useContext(PackConfigContext);
-	const { columns, rows } = useContext(GridContext);
 
 	const [packId, programId] = program.type.split(":");
 	const { icon, color } = packConfig[packId].programs[programId];
-	const [headColumn, headRow] = program.pos[0];
+	const { column: headColumn, row: headRow } = program.pos[0];
 
 	return <g>
-		{program.pos
-			.map(([column, row]) => column + row * columns).sort()
-			.map((sectorIndex, _, allIndexes) => {
-				const column = sectorIndex % columns;
-				const row = Math.floor(sectorIndex / columns);
+		{program.pos.sort((posA, posB) => posA.sectorIndex - posB.sectorIndex)
+			.map((pos, _, allPos) => {
+				const { sectorIndex, column, row } = pos;
+				const posRight = pos.right();
+				const posDown = pos.down();
 				return (
 					<Sector
 						key={sectorIndex}
 						{...{ column, row, color }}
-						connectRight={column + 1 !== columns && allIndexes.includes(sectorIndex + 1)}
-						connectDown={row + 1 !== rows && allIndexes.includes(sectorIndex + columns)}
+						connectRight={posRight && allPos.find(posRight.equals)}
+						connectDown={posDown && allPos.find(posDown.equals)}
 					/>
 				);
 			})
@@ -101,4 +104,4 @@ const styles = {
 		stroke: ${color};
 		stroke-width: 8;
 	`,
-}
+};
