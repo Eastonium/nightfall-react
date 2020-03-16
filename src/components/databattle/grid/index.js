@@ -1,40 +1,47 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
+import { getElementPosition } from 'utils';
+
 import { PackConfigContext } from 'game';
-import { GridContext } from '.';
+import { GridPosition, GridContext } from '..';
 
 const size = 32;
 
-export const Grid = ({ cellState, objects, programs, ...props }) => {
+export const Grid = ({
+	cellState, cellStyle, objects, programs,
+	gridFocusPosition, setGridFocusPosition,
+	...props
+}) => {
 	const { columns, rows } = useContext(GridContext);
 
-	// const objectMap = useMemo(() => (
-	// 	objects.reduce((map, object) => {
-	// 		const [column, row] = object.pos;
-	// 		return Object.assign(map, { [column + row * columns]: object })
-	// 	}, [])
-	// ), [objects, columns]);
-
-	// const programMap = useMemo(() => (
-	// 	programs.reduce((map, program) => (
-	// 		program.pos.reduce((map, [column, row]) => (
-	// 			Object.assign(map, { [column + row * columns]: program })
-	// 		), map)
-	// 	), [])
-	// ), [programs, columns]);
+	const handleSvgClick = useCallback(event => {
+		const { x: svgX, y: svgY } = getElementPosition(event.currentTarget);
+		setGridFocusPosition(new GridPosition([
+			Math.floor((event.clientX - svgX) / size),
+			Math.floor((event.clientY - svgY) / size),
+		]));
+	}, [setGridFocusPosition]);
 
 	return (
 		<div {...props}>
-			<svg width={columns * size} height={rows * size} css={styles.svg}>
+			<svg css={styles.svg} width={columns * size} height={rows * size} onClick={handleSvgClick}>
 				{[...Array(columns * rows)].map((_, sectorIndex) => {
 					const column = sectorIndex % columns;
 					const row = Math.floor(sectorIndex / columns);
 					return !!+cellState[sectorIndex] && <Tile key={sectorIndex} {...{ column, row }} />;
 				})}
-				{objects.map((object, i) => <MapObject key={i} {...{ object }} />)}
+				{objects.map((object, i) => <GridObject key={i} {...{ object }} />)}
 				{programs.map((program, i) => <Program key={i} {...{ program }} />)}
+				{gridFocusPosition && <rect
+					// The key makes it create a new element each time the selected sector changes
+					// This way the the animation resets
+					key={gridFocusPosition.sectorIndex}
+					css={styles.focusIndicator}
+					x={2 + gridFocusPosition.column * size} y={2 + gridFocusPosition.row * size}
+					width={size - 4} height={size - 4}
+				/>}
 			</svg>
 		</div>
 	);
@@ -48,7 +55,7 @@ const Tile = ({ column, row }) => (
 	/>
 );
 
-const MapObject = ({ object }) => {
+const GridObject = ({ object }) => {
 	const packConfig = useContext(PackConfigContext);
 
 	const [packId, objectId] = object.type.split(":");
@@ -103,5 +110,16 @@ const styles = {
 		fill: none;
 		stroke: ${color};
 		stroke-width: 8;
+	`,
+	focusIndicator: css`
+		@keyframes flashFocusIndicator {
+			to {
+				stroke: transparent;
+			}
+		}
+		fill: none;
+		stroke: #FFF;
+		stroke-width: 2;
+		animation: 530ms infinite flashFocusIndicator;
 	`,
 };

@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-
-
+import { Button } from 'components/button';
 import { Window } from  'components/window';
 import { Grid } from './grid';
-import { Button } from 'components/button';
+import { Position } from './grid/position';
 
 import spybotImage from 'assets/base/textures/spybots/Snaptrax S45.png';
-import { Position } from './grid/position';
 
 const columns = 14;
 const rows = 11;
+export class GridPosition extends Position {
+	constructor(pos) {
+		super(pos, columns, rows);
+	}
+};
 
 const cellState = (
 	"01110000001110" +
@@ -71,7 +74,7 @@ const objects = [
 		type: "base:upload_zone",
 		pos: [12, 9],
 	},
-].map(({ type, pos }) => ({ type, pos: new Position(pos, columns, rows) }));
+].map(({ type, pos }) => ({ type, pos: new GridPosition(pos) }));
 
 const programs = [
 	{
@@ -98,11 +101,13 @@ const programs = [
 		type: "base:dog_2",
 		pos: [[1,7]],
 	},
-].map(({ type, pos }) => ({ type, pos: pos.map(pos => new Position(pos, columns, rows)) }));
+].map(({ type, pos }) => ({ type, pos: pos.map(pos => new GridPosition(pos)) }));
 
 export const GridContext = React.createContext(null);
 
 const _DataBattle = props => {
+	const [gridFocusPosition, setGridFocusPosition] = useState(null);
+
 	return (
 		<Window
 			title="databattle in progress"
@@ -127,6 +132,7 @@ const _DataBattle = props => {
 					<Grid
 						css={styles.grid}
 						{...{ cellState, cellStyle, objects, programs }}
+						{...{ gridFocusPosition,setGridFocusPosition }}
 					/>
 				</GridContext.Provider>
 			</div>

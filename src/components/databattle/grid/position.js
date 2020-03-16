@@ -1,5 +1,6 @@
 export class Position {
 	constructor(pos, columns, rows) {
+		if (columns == null || rows == null) throw Error("No columns or rows specified for Position");
 		this.columns = columns;
 		this.rows = rows;
 		if (Array.isArray(pos)) {
