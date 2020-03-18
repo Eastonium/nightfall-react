@@ -1,44 +1,35 @@
 export class Position {
-	constructor(pos, columns, rows) {
-		if (columns == null || rows == null) throw Error("No columns or rows specified for Position");
-		this.columns = columns;
-		this.rows = rows;
+	constructor(pos, gridWidth, gridHeight) {
+		// TODO: When/if the grid is a class, pass that in instead
+		if (gridWidth == null) throw Error("No grid width specified for Position");
+		if (gridHeight == null) throw Error("No grid height specified for Position");
+		this.gridWidth = gridWidth;
+		this.gridHeight = gridHeight;
+
 		if (Array.isArray(pos)) {
-			this.sectorIndex = pos[0] + pos[1] * columns;
+			[this.column, this.row] = pos;
 		} else {
-			this.sectorIndex = pos;
+			this.column = pos % gridWidth;
+			this.row = Math.floor(pos / gridWidth);
 		}
-
-		this.equals = this.equals.bind(this);
 	}
 
-	get column() {
-		return this.sectorIndex % this.columns;
-	}
-	get row() {
-		return Math.floor(this.sectorIndex / this.columns);
-	}
-
-	up(sectors = 1) {
-		return this.down(-sectors);
-	}
-	down(sectors = 1) {
-		if (sectors === 0) return this;
-		const newIndex = this.sectorIndex + sectors * this.columns;
-		if (newIndex < 0 || newIndex >= this.columns * this.rows) return null;
-		return new Position(newIndex, this.columns, this.rows);
-	}
-	left(sectors = 1) {
-		return this.right(-sectors);
-	}
-	right(sectors = 1) {
-		if (sectors === 0) return this;
-		const newColumn = this.sectorIndex % this.columns + sectors;
-		if (newColumn < 0 || newColumn >= this.columns) return null;
-		return new Position(this.sectorIndex + sectors, this.columns, this.rows);
+	get sectorIndex() {
+		if ((this.gridWidth && (this.column < 0 || this.column >= this.gridWidth))
+			|| (this.gridHeight && (this.row < 0 || this.row >= this.gridHeight))) {
+			return NaN;
+		}
+		return this.column + this.row * this.gridWidth;
 	}
 
-	equals(position) {
-		return this === position || this.sectorIndex === position.sectorIndex;
-	}
+	up = (sectors = 1) => this.down(-sectors);
+	down = (sectors = 1) => { this.row += sectors; return this; }
+	left = (sectors = 1) => this.right(-sectors);
+	right = (sectors = 1) => { this.column += sectors; return this; }
+
+	isValid = () => isNaN(this.sectorIndex);
+	equals = position => (
+		this === position || (this.column === position.column && this.row === position.row)
+	);
+	clone = () => new Position([this.column, this.row], this.gridWidth, this.gridHeight);
 };

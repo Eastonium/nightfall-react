@@ -18,10 +18,11 @@ export const Grid = ({
 
 	const handleSvgClick = useCallback(event => {
 		const { x: svgX, y: svgY } = getElementPosition(event.currentTarget);
-		setGridFocusPosition(new GridPosition([
+		const clickedSector = new GridPosition([
 			Math.floor((event.clientX - svgX) / size),
 			Math.floor((event.clientY - svgY) / size),
-		]));
+		]);
+		setGridFocusPosition(clickedSector);
 	}, [setGridFocusPosition]);
 
 	return (
@@ -76,8 +77,8 @@ const Program = ({ program }) => {
 		{program.pos.sort((posA, posB) => posA.sectorIndex - posB.sectorIndex)
 			.map((pos, _, allPos) => {
 				const { sectorIndex, column, row } = pos;
-				const posRight = pos.right();
-				const posDown = pos.down();
+				const posRight = pos.clone().right();
+				const posDown = pos.clone().down();
 				return (
 					<Sector
 						key={sectorIndex}
