@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from 'react';
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx, keyframes } from '@emotion/core';
 
 import { getElementPosition } from 'utils';
 
@@ -114,14 +114,9 @@ const styles = {
 		stroke-width: 8;
 	`,
 	focusIndicator: css`
-		@keyframes flashFocusIndicator {
-			to {
-				stroke: transparent;
-			}
-		}
 		fill: none;
 		stroke: #FFF;
 		stroke-width: 2;
-		animation: 530ms infinite flashFocusIndicator;
+		animation: 530ms infinite ${keyframes`to { stroke: transparent; }`};
 	`,
 };

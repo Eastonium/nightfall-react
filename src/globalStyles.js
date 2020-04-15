@@ -1,3 +1,6 @@
+import { css } from '@emotion/core';
+
+export default css`
 @font-face {
   font-family: "Abstract";
   src: url("/fonts/Abstract.ttf");
@@ -52,3 +55,4 @@ button {
 #root {
   height: 100%;
 }
+`;
