@@ -6,6 +6,7 @@ import { getElementPosition } from 'utils';
 
 import { PackConfigContext } from 'game';
 import { GridPosition, GridContext } from '..';
+import { Position } from './position';
 
 const size = 32;
 
@@ -71,17 +72,17 @@ const Program = ({ program }) => {
 
 	const [packId, programId] = program.type.split(":");
 	const { icon, color } = packConfig[packId].programs[programId];
-	const { column: headColumn, row: headRow } = program.pos[0];
+	const { column: headColumn, row: headRow } = program.slug[0];
 
 	return <g>
-		{program.pos.sort((posA, posB) => posA.sectorIndex - posB.sectorIndex)
-			.map((pos, _, allPos) => {
-				const { sectorIndex, column, row } = pos;
+		{program.slug.sort(Position.compare)
+			.map((pos, i, allPos) => {
+				const { column, row } = pos;
 				const posRight = pos.clone().right();
 				const posDown = pos.clone().down();
 				return (
 					<Sector
-						key={sectorIndex}
+						key={i}
 						{...{ column, row, color }}
 						connectRight={posRight && allPos.find(posRight.equals)}
 						connectDown={posDown && allPos.find(posDown.equals)}

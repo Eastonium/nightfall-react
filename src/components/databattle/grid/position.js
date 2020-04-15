@@ -32,4 +32,11 @@ export class Position {
 		this === position || (this.column === position.column && this.row === position.row)
 	);
 	clone = () => new Position([this.column, this.row], this.gridWidth, this.gridHeight);
+
+	static compare(positionA, positionB, reverseColumn, reverseRow) {
+		return Math.sign(
+			(positionA.row - positionB.row) * (reverseRow ? -1 : 1) ||
+			(positionA.column - positionB.column) * (reverseColumn ? -1 : 1)
+		);
+	}
 };

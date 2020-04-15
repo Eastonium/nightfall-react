@@ -45,7 +45,7 @@ const cellStyle = (
 	"00000000000000"
 );
 
-const objects = [
+const mapObjects = [
 	{
 		type: "base:data_item",
 		pos: [1, 2],
@@ -79,29 +79,29 @@ const objects = [
 const programs = [
 	{
 		type: "base:dog_2",
-		pos: [[3,1],[3,2],[3,3],[3,4]],
+		slug: [[3,1],[3,2],[3,3],[3,4]],
 	},
 	{
 		type: "base:dog_2",
-		pos: [[2,2]],
+		slug: [[2,2]],
 	},
 	{
 		type: "base:dog_2",
-		pos: [[0,3]],
+		slug: [[0,3]],
 	},
 	{
 		type: "base:dog_2",
-		pos: [[1,4]],
+		slug: [[1,4]],
 	},
 	{
 		type: "base:dog_2",
-		pos: [[2,5]],
+		slug: [[2,5]],
 	},
 	{
 		type: "base:dog_2",
-		pos: [[1,7]],
+		slug: [[1,7]],
 	},
-].map(({ type, pos }) => ({ type, pos: pos.map(pos => new GridPosition(pos)) }));
+].map(({ type, slug }) => ({ type, slug: slug.map(pos => new GridPosition(pos)) }));
 
 export const GridContext = React.createContext(null);
 
@@ -131,7 +131,7 @@ const _DataBattle = props => {
 				<GridContext.Provider value={{ columns, rows }}>
 					<Grid
 						css={styles.grid}
-						{...{ cellState, cellStyle, objects, programs }}
+						{...{ cellState, cellStyle, objects: mapObjects, programs }}
 						{...{ gridFocusPosition,setGridFocusPosition }}
 					/>
 				</GridContext.Provider>
