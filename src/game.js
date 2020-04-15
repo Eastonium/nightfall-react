@@ -35,16 +35,17 @@ export const PackConfigContext = React.createContext(null);
 
 export const Game = ({ packId }) => {
 	const [config, setConfig] = useState({});
-	const [loading, setLoading] = useState(true);
-	useEffect(() => {
-		if (config[packId]) return;
-		loadConfig(packId).then(loadedConfig => {
-			setConfig({ ...config, [packId]: loadedConfig });
-			setLoading(false);
-		});
-	}, [packId, config]);
 
-	if (loading) return "Loading...";
+	const packLoaded = !!config[packId];
+	useEffect(() => {
+		if (packLoaded) return;
+		loadConfig(packId).then(loadedConfig => {
+			setConfig(config => ({ ...config, [packId]: loadedConfig }));
+		});
+	}, [packId, packLoaded]);
+
+	if (!packLoaded) return "Loading...";
+
 	return (
 		<PackConfigContext.Provider value={config}>
 			<Map />
