@@ -10,6 +10,7 @@
     "color": "^3.1.2",
     "date-fns": "^2.9.0",
     "immer": "^5.3.6",
+    "polished": "^3.5.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",

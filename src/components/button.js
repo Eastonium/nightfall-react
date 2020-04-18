@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import Color from 'color';
+import { desaturate, darken } from 'polished';
 
 import * as Fonts from 'fonts';
 
@@ -12,10 +12,10 @@ const buttonColors = {
 	red: "#F5042F",
 }
 
-const getGradientColors = (color, active) => [
-	Color(color).desaturate(active ? 0 : 0.5).hex(),
-	Color(color).desaturate(active ? 0 : 0.5).darken(0.8).hex(),
-];
+const getGradientColors = (color, active) => {
+	if (active) color = desaturate(0.5, color);
+	return [color, darken(0.8, color)];
+};
 
 export const Button = Object.assign(
 	function Button({ bold, color = buttonColors.blue, big, fill, children, wrapperProps, ...props }) {
