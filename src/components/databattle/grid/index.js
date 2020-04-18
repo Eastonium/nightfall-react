@@ -11,7 +11,7 @@ import { Position } from './position';
 const size = 32;
 
 export const Grid = ({
-	cellState, cellStyle, objects, programs,
+	cellState, cellStyle, mapObjects, programs,
 	gridFocusPosition, setGridFocusPosition,
 	...props
 }) => {
@@ -34,7 +34,7 @@ export const Grid = ({
 					const row = Math.floor(sectorIndex / columns);
 					return !!+cellState[sectorIndex] && <Tile key={sectorIndex} {...{ column, row }} />;
 				})}
-				{objects.map((object, i) => <GridObject key={i} {...{ object }} />)}
+				{mapObjects.map((mapObject, i) => <MapObject key={i} {...{ mapObject }} />)}
 				{programs.map((program, i) => <Program key={i} {...{ program }} />)}
 				{gridFocusPosition && <rect
 					// The key makes it create a new element each time the selected sector changes
@@ -57,12 +57,12 @@ const Tile = ({ column, row }) => (
 	/>
 );
 
-const GridObject = ({ object }) => {
+const MapObject = ({ mapObject }) => {
 	const packConfig = useContext(PackConfigContext);
 
-	const [packId, objectId] = object.type.split(":");
+	const [packId, objectId] = mapObject.type.split(":");
 	const { icon } = packConfig[packId].objects[objectId];
-	const { column, row } = object.pos;
+	const { column, row } = mapObject.pos;
 
 	return <image x={column * size} y={row * size} href={icon} />;
 };

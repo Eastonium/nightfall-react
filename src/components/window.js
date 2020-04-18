@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const ContentSection = ({ ...props }) => (
+const ContentSection = props => (
 	<div css={styles.contentSection} {...props} />
 );
 
@@ -26,7 +26,7 @@ export const Window = Object.assign(
 		return (
 			<div css={styles.window} style={dynamicStyles} className="Window" {...props}>
 				<div>
-					<div css={styles.bar} className={titleBarIcon ? "has-icon" : ""}>
+					<div css={styles.bar(!!titleBarIcon)}>
 						{titleBarIcon && <img {...titleBarIcon} />}
 						{title && <div className="title">{title}</div>}
 						{titleBarButtonProps && (
@@ -79,7 +79,7 @@ const styles = {
 			border-bottom: 1px solid #000;
 		}
 	`,
-	bar: css`
+	bar: hasIcon => css`
 		flex: 0 0 auto;
 		height: 17px;
 		border-width: 1px 0 0 1px;
@@ -89,9 +89,7 @@ const styles = {
 		background: linear-gradient(#DDD, #777);
 		color: #000;
 
-		&.has-icon {
-			padding-left: 0;
-		}
+		${hasIcon ? css`padding-left: 0;` : ''}
 
 		> div {
 			flex: 0 0 auto;
