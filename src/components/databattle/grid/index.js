@@ -1,48 +1,39 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 /** @jsx jsx */
 import { css, jsx, keyframes } from '@emotion/core';
 
-import { getElementPosition } from 'utils';
-
 import { PackConfigContext } from 'game';
-import { GridPosition, GridContext } from '..';
+import { GridContext } from '..';
 import { Position } from './position';
 
 const size = 32;
 
 export const Grid = ({
 	cellState, cellStyle, mapObjects, programs,
-	gridFocusPosition, setGridFocusPosition,
+	selectedProgramPosition, setSelectedProgram,
 	...props
 }) => {
 	const { columns, rows } = useContext(GridContext);
 
-	const handleSvgClick = useCallback(event => {
-		const { x: svgX, y: svgY } = getElementPosition(event.currentTarget);
-		const clickedSector = new GridPosition([
-			Math.floor((event.clientX - svgX) / size),
-			Math.floor((event.clientY - svgY) / size),
-		]);
-		setGridFocusPosition(clickedSector);
-	}, [setGridFocusPosition]);
-
 	return (
 		<div {...props}>
-			<svg css={styles.svg} width={columns * size} height={rows * size} onClick={handleSvgClick}>
+			<svg css={styles.svg} width={columns * size} height={rows * size}>
 				{[...Array(columns * rows)].map((_, sectorIndex) => {
 					const column = sectorIndex % columns;
 					const row = Math.floor(sectorIndex / columns);
 					return !!+cellState[sectorIndex] && <Tile key={sectorIndex} {...{ column, row }} />;
 				})}
-				{mapObjects.map((mapObject, i) => <MapObject key={i} {...{ mapObject }} />)}
-				{programs.map((program, i) => <Program key={i} {...{ program }} />)}
-				{gridFocusPosition && <rect
+				{mapObjects.map((mapObject, i) => (
+					<MapObject key={i} {...{ mapObject, setSelectedProgram }} />
+				))}
+				{programs.map((program, i) => (
+					<Program key={i} {...{ program, setSelectedProgram }} />
+				))}
+				{selectedProgramPosition && <SelectionIndicator
 					// The key makes it create a new element each time the selected sector changes
 					// This way the the animation resets
-					key={gridFocusPosition.sectorIndex}
-					css={styles.focusIndicator}
-					x={2 + gridFocusPosition.column * size} y={2 + gridFocusPosition.row * size}
-					width={size - 4} height={size - 4}
+					key={selectedProgramPosition.sectorIndex}
+					position={selectedProgramPosition}
 				/>}
 			</svg>
 		</div>
@@ -57,24 +48,36 @@ const Tile = ({ column, row }) => (
 	/>
 );
 
-const MapObject = ({ mapObject }) => {
+const SelectionIndicator = ({ position }) => (
+	<rect
+		css={styles.selectionIndicator}
+		x={2 + position.column * size} y={2 + position.row * size}
+		width={size - 4} height={size - 4}
+	/>
+);
+
+const MapObject = ({ mapObject, setSelectedProgram }) => {
 	const packConfig = useContext(PackConfigContext);
 
 	const [packId, objectId] = mapObject.type.split(":");
 	const { icon } = packConfig[packId].objects[objectId];
 	const { column, row } = mapObject.pos;
 
-	return <image x={column * size} y={row * size} href={icon} />;
+	return <image
+		x={column * size} y={row * size}
+		href={icon}
+		onClick={() => setSelectedProgram(mapObject)}
+	/>;
 };
 
-const Program = ({ program }) => {
+const Program = ({ program, setSelectedProgram }) => {
 	const packConfig = useContext(PackConfigContext);
 
 	const [packId, programId] = program.type.split(":");
 	const { icon, color } = packConfig[packId].programs[programId];
 	const { column: headColumn, row: headRow } = program.slug[0];
 
-	return <g>
+	return <g onClick={() => setSelectedProgram(program)}>
 		{program.slug.sort(Position.compare)
 			.map((pos, i, allPos) => {
 				const { column, row } = pos;
@@ -113,7 +116,7 @@ const styles = {
 		stroke: ${color};
 		stroke-width: 8;
 	`,
-	focusIndicator: css`
+	selectionIndicator: css`
 		fill: none;
 		stroke: #FFF;
 		stroke-width: 2;

@@ -111,24 +111,21 @@ export const GridContext = React.createContext(null);
 const _DataBattle = props => {
 	const packConfig = useContext(PackConfigContext);
 
-	const [gridFocusPosition, setGridFocusPosition] = useState(null);
-	const focusedProgramInfo = useMemo(() => {
-		if (!gridFocusPosition) return null;
-		const matchedMapObject = mapObjects.find(({ pos }) => pos.equals(gridFocusPosition));
-		if (matchedMapObject) {
-			const [packId, objectId] = matchedMapObject.type.split(":");
-			return packConfig[packId].objects[objectId];
-		}
-		const matchedProgram = programs.find(({ slug: [pos] }) => pos.equals(gridFocusPosition));
-		if (matchedProgram) {
-			const [packId, programId] = matchedProgram.type.split(":");
+	const [selectedProgram, setSelectedProgram] = useState(null);
+	const selectedProgramInfo = useMemo(() => {
+		if (!selectedProgram) return null;
+		
+		const [packId, programId] = selectedProgram.type.split(":");
+		if (mapObjects.includes(selectedProgram)) return packConfig[packId].objects[programId];
+		if (programs.includes(selectedProgram)) {
 			return {
 				...packConfig[packId].programs[programId],
-				currentSize: matchedProgram.slug.length,
+				currentSize: selectedProgram.slug.length,
 			};
 		}
+
 		return null;
-	}, [/*mapObjects, programs, */packConfig, gridFocusPosition]);
+	}, [/*mapObjects, programs, */packConfig, selectedProgram]);
 
 	return (
 		<Window
@@ -147,14 +144,14 @@ const _DataBattle = props => {
 					sectioned
 					postFooter={<Button color="red" fill bold>Undo</Button>}
 				>
-					{focusedProgramInfo ? <ProgramInfo program={focusedProgramInfo} /> : ''}
+					{selectedProgramInfo ? <ProgramInfo program={selectedProgramInfo} /> : ''}
 				</Window>
 				{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
 				<GridContext.Provider value={{ columns, rows }}>
 					<Grid
 						css={styles.grid}
-						{...{ cellState, cellStyle, mapObjects, programs }}
-						{...{ gridFocusPosition,setGridFocusPosition }}
+						{...{ cellState, cellStyle, mapObjects, programs, setSelectedProgram }}
+						selectedProgramPosition={selectedProgram?.pos ?? selectedProgram?.slug?.[0]}
 					/>
 				</GridContext.Provider>
 			</div>
