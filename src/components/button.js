@@ -13,7 +13,7 @@ const buttonColors = {
 }
 
 const getGradientColors = (color, active) => {
-	if (active) color = desaturate(0.5, color);
+	if (!active) color = desaturate(0.5, color);
 	return [color, darken(0.8, color)];
 };
 

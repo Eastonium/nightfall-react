@@ -3,7 +3,7 @@
 		"name": "Sentinel",
 		"desc": "Corporate data defender",
 		"speed": 1,
-		"max_size": 3,
+		"maxSize": 3,
 		"color": "#fc9800",
 		"commands": [
 			{
@@ -19,7 +19,7 @@
 		"name": "Sentinel 2.0",
 		"desc": "Improved corporate data defender",
 		"speed": 2,
-		"max_size": 4,
+		"maxSize": 4,
 		"color": "#fc9800",
 		"commands": [
 			{
@@ -36,7 +36,7 @@
 		"desc": "Top of the line in corporate data defense",
 		"alt_desc": "Sentinel that attacks several programs at once",
 		"speed": 2,
-		"max_size": 4,
+		"maxSize": 4,
 		"color": "#fc9800",
 		"commands": [
 			{
@@ -53,7 +53,7 @@
 		"desc": "Corporate ranged attack program",
 		"alt_desc": "Basic ranged attack program",
 		"speed": 1,
-		"max_size": 2,
+		"maxSize": 2,
 		"color": "#ff258a",
 		"commands": [
 			{
@@ -69,7 +69,7 @@
 		"name": "Watchman X",
 		"desc": "Improved version of Watchman",
 		"speed": 1,
-		"max_size": 4,
+		"maxSize": 4,
 		"color": "#ff258a",
 		"commands": [
 			{
@@ -86,7 +86,7 @@
 		"desc": "Qui custodiet ipsos custodes?",
 		"alt_desc": "Watching from an even greater distance",
 		"speed": 1,
-		"max_size": 4,
+		"maxSize": 4,
 		"color": "#ff258a",
 		"commands": [
 			{
@@ -102,7 +102,7 @@
 		"name": "Guard Pup",
 		"desc": "A speedy little corporate cur",
 		"speed": 3,
-		"max_size": 2,
+		"maxSize": 2,
 		"color": "#fcbb00",
 		"commands": [
 			{
@@ -118,7 +118,7 @@
 		"name": "Guard Dog",
 		"desc": "Who let the dogs out?",
 		"speed": 3,
-		"max_size": 3,
+		"maxSize": 3,
 		"color": "#fcbb00",
 		"commands": [
 			{
@@ -134,7 +134,7 @@
 		"name": "Attack Dog",
 		"desc": "Ravenous and bloodthirsty corporate canine",
 		"speed": 4,
-		"max_size": 7,
+		"maxSize": 7,
 		"color": "#fcbb00",
 		"commands": [
 			{
@@ -150,7 +150,7 @@
 		"name": "Warden",
 		"desc": "Slow and steady corporate attack program",
 		"speed": 1,
-		"max_size": 5,
+		"maxSize": 5,
 		"color": "#fc0010",
 		"commands": [
 			{
@@ -166,7 +166,7 @@
 		"name": "Warden+",
 		"desc": "Get out of its way",
 		"speed": 2,
-		"max_size": 6,
+		"maxSize": 6,
 		"color": "#fc0010",
 		"commands": [
 			{
@@ -182,7 +182,7 @@
 		"name": "Warden++",
 		"desc": "The last word in corporate security",
 		"speed": 3,
-		"max_size": 7,
+		"maxSize": 7,
 		"color": "#fc0010",
 		"commands": [
 			{
@@ -198,7 +198,7 @@
 		"name": "Sensor",
 		"desc": "Immobile program eradicator",
 		"speed": 0,
-		"max_size": 1,
+		"maxSize": 1,
 		"color": "#fcf101",
 		"commands": [
 			{
@@ -214,7 +214,7 @@
 		"name": "Radar",
 		"desc": "Deadly program eradicator",
 		"speed": 0,
-		"max_size": 1,
+		"maxSize": 1,
 		"color": "#fcf101",
 		"commands": [
 			{
@@ -230,7 +230,7 @@
 		"name": "Sonar",
 		"desc": "Long-range program eradicator",
 		"speed": 0,
-		"max_size": 1,
+		"maxSize": 1,
 		"color": "#fcf101",
 		"commands": [
 			{
@@ -246,7 +246,7 @@
 		"name": "Fire Wall",
 		"desc": "Keeps unwanted programs out of corporate sectors",
 		"speed": 2,
-		"max_size": 20,
+		"maxSize": 20,
 		"color": "#fc6200",
 		"commands": [
 			{
@@ -262,7 +262,7 @@
 		"name": "Boss",
 		"desc": "Prepare to be owned",
 		"speed": 6,
-		"max_size": 25,
+		"maxSize": 25,
 		"color": "#fc6200",
 		"commands": [
 			{

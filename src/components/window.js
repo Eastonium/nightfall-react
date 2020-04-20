@@ -36,7 +36,7 @@ export const Window = Object.assign(
 						)}
 					</div>
 				</div>
-				{children && <>
+				{children != null && <>
 					<div css={styles.content}>
 						{sectioned
 							? React.Children.map(children, child => <ContentSection children={child} />)

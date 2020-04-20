@@ -3,7 +3,7 @@
 		"name": "",
 		"desc": "",
 		"move": 1,
-		"max_size": 1,
+		"maxSize": 1,
 		"color": "#000000",
 		"commands": [
 			{

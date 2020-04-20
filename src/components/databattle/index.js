@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
 import { Button } from 'components/button';
 import { Window } from  'components/window';
+
+import { PackConfigContext } from 'game';
+import { ProgramInfo } from './programInfo';
 import { Grid } from './grid';
 import { Position } from './grid/position';
 
@@ -106,7 +109,26 @@ const programs = [
 export const GridContext = React.createContext(null);
 
 const _DataBattle = props => {
+	const packConfig = useContext(PackConfigContext);
+
 	const [gridFocusPosition, setGridFocusPosition] = useState(null);
+	const focusedProgramInfo = useMemo(() => {
+		if (!gridFocusPosition) return null;
+		const matchedMapObject = mapObjects.find(({ pos }) => pos.equals(gridFocusPosition));
+		if (matchedMapObject) {
+			const [packId, objectId] = matchedMapObject.type.split(":");
+			return packConfig[packId].objects[objectId];
+		}
+		const matchedProgram = programs.find(({ slug: [pos] }) => pos.equals(gridFocusPosition));
+		if (matchedProgram) {
+			const [packId, programId] = matchedProgram.type.split(":");
+			return {
+				...packConfig[packId].programs[programId],
+				currentSize: matchedProgram.slug.length,
+			};
+		}
+		return null;
+	}, [/*mapObjects, programs, */packConfig, gridFocusPosition]);
 
 	return (
 		<Window
@@ -125,13 +147,13 @@ const _DataBattle = props => {
 					sectioned
 					postFooter={<Button color="red" fill bold>Undo</Button>}
 				>
-					{' '}
+					{focusedProgramInfo ? <ProgramInfo program={focusedProgramInfo} /> : ''}
 				</Window>
 				{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
 				<GridContext.Provider value={{ columns, rows }}>
 					<Grid
 						css={styles.grid}
-						{...{ cellState, cellStyle, objects: mapObjects, programs }}
+						{...{ cellState, cellStyle, mapObjects, programs }}
 						{...{ gridFocusPosition,setGridFocusPosition }}
 					/>
 				</GridContext.Provider>
