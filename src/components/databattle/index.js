@@ -106,9 +106,9 @@ const programs = [
 	},
 ].map(({ type, slug }) => ({ type, slug: slug.map(pos => new GridPosition(pos)) }));
 
-export const GridContext = React.createContext(null);
+export const DataBattleContext = React.createContext(null);
 
-const _DataBattle = props => {
+const _DataBattle = ({ id, ...props }) => {
 	const packConfig = useContext(PackConfigContext);
 
 	const [selectedProgram, setSelectedProgram] = useState(null);
@@ -147,13 +147,13 @@ const _DataBattle = props => {
 					{selectedProgramInfo ? <ProgramInfo program={selectedProgramInfo} /> : ''}
 				</Window>
 				{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
-				<GridContext.Provider value={{ columns, rows }}>
+				<DataBattleContext.Provider value={{ id, columns, rows }}>
 					<Grid
 						css={styles.grid}
 						{...{ cellState, cellStyle, mapObjects, programs, setSelectedProgram }}
 						selectedProgramPosition={selectedProgram?.pos ?? selectedProgram?.slug?.[0]}
 					/>
-				</GridContext.Provider>
+				</DataBattleContext.Provider>
 			</div>
 		</Window>
 	);

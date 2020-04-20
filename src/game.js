@@ -50,7 +50,7 @@ export const Game = ({ packId }) => {
 		<PackConfigContext.Provider value={config}>
 			<Map />
 			<WindowContainer coverScreen>
-				<DataBattle x={40} y={30} />
+				<DataBattle id={0} x={40} y={30} />
 			</WindowContainer>
 		</PackConfigContext.Provider>
 	);
