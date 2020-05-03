@@ -1,4 +1,4 @@
-import { css } from '@emotion/core';
+import { css } from "@emotion/core";
 
 export const Abstract = css`
 	font-family: "Abstract";
@@ -13,3 +13,6 @@ export const BitLight = css`
 	font-family: "BitLight";
 	font-size: 10px;
 `;
+
+const Fonts = { Abstract, O4b_25, BitLight };
+export default Fonts;

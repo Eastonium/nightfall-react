@@ -1,16 +1,16 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo, useContext } from "react";
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from "@emotion/core";
 
-import { Button } from 'components/button';
-import { Window } from  'components/window';
+import { Button } from "components/button";
+import { Window } from "components/window";
 
-import { PackConfigContext } from 'game';
-import { ProgramInfo } from './programInfo';
-import { Grid } from './grid';
-import { Position } from './grid/position';
+import { PackConfigContext } from "game";
+import { ProgramInfo } from "./programInfo";
+import { Grid } from "./grid";
+import { Position } from "./grid/position";
 
-import spybotImage from 'assets/base/textures/spybots/Snaptrax S45.png';
+import spybotImage from "assets/base/textures/spybots/Snaptrax S45.png";
 
 const columns = 14;
 const rows = 11;
@@ -18,9 +18,9 @@ export class GridPosition extends Position {
 	constructor(pos) {
 		super(pos, columns, rows);
 	}
-};
+}
 
-const cellState = (
+const cellState =
 	"01110000001110" +
 	"11111000011111" +
 	"11111000011111" +
@@ -31,10 +31,9 @@ const cellState = (
 	"11110000011111" +
 	"11111000011111" +
 	"11111000011111" +
-	"01110000001110"
-);
+	"01110000001110";
 
-const cellStyle = (
+const cellStyle =
 	"00000000000000" +
 	"00000000000000" +
 	"00000000000000" +
@@ -45,8 +44,7 @@ const cellStyle = (
 	"11111110000000" +
 	"00000000000000" +
 	"00000000000000" +
-	"00000000000000"
-);
+	"00000000000000";
 
 const mapObjects = [
 	{
@@ -82,27 +80,32 @@ const mapObjects = [
 const programs = [
 	{
 		type: "base:dog_2",
-		slug: [[3,1],[3,2],[3,3],[3,4]],
+		slug: [
+			[3, 1],
+			[3, 2],
+			[3, 3],
+			[3, 4],
+		],
 	},
 	{
 		type: "base:dog_2",
-		slug: [[2,2]],
+		slug: [[2, 2]],
 	},
 	{
 		type: "base:dog_2",
-		slug: [[0,3]],
+		slug: [[0, 3]],
 	},
 	{
 		type: "base:dog_2",
-		slug: [[1,4]],
+		slug: [[1, 4]],
 	},
 	{
 		type: "base:dog_2",
-		slug: [[2,5]],
+		slug: [[2, 5]],
 	},
 	{
 		type: "base:dog_2",
-		slug: [[1,7]],
+		slug: [[1, 7]],
 	},
 ].map(({ type, slug }) => ({ type, slug: slug.map(pos => new GridPosition(pos)) }));
 
@@ -114,7 +117,7 @@ const _DataBattle = ({ id, ...props }) => {
 	const [selectedProgram, setSelectedProgram] = useState(null);
 	const selectedProgramInfo = useMemo(() => {
 		if (!selectedProgram) return null;
-		
+
 		const [packId, programId] = selectedProgram.type.split(":");
 		if (mapObjects.includes(selectedProgram)) return packConfig[packId].objects[programId];
 		if (programs.includes(selectedProgram)) {
@@ -125,7 +128,7 @@ const _DataBattle = ({ id, ...props }) => {
 		}
 
 		return null;
-	}, [/*mapObjects, programs, */packConfig, selectedProgram]);
+	}, [/*mapObjects, programs, */ packConfig, selectedProgram]);
 
 	return (
 		<Window
@@ -135,19 +138,23 @@ const _DataBattle = ({ id, ...props }) => {
 			{...props}
 		>
 			<div css={styles.layoutContainer}>
-				<Window title="spybot" sectioned>
-					<img src={spybotImage} alt="spybot" style={{ display: "block" }} />
-				</Window>
-				<Window
-					css={styles.programInfoWindow}
-					title="program.info"
-					sectioned
-					postFooter={<Button color="red" fill bold>Undo</Button>}
-				>
-					{selectedProgramInfo ? <ProgramInfo program={selectedProgramInfo} /> : ''}
-				</Window>
-				{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
 				<DataBattleContext.Provider value={{ id, columns, rows }}>
+					<Window title="spybot" sectioned>
+						<img src={spybotImage} alt="spybot" style={{ display: "block" }} />
+					</Window>
+					<Window
+						css={styles.programInfoWindow}
+						title="program.info"
+						sectioned
+						postFooter={
+							<Button color="red" fill bold>
+								Undo
+							</Button>
+						}
+					>
+						{selectedProgramInfo ? <ProgramInfo program={selectedProgramInfo} /> : ""}
+					</Window>
+					{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
 					<Grid
 						css={styles.grid}
 						{...{ cellState, cellStyle, mapObjects, programs, setSelectedProgram }}

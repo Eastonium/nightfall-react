@@ -1,43 +1,59 @@
 /** @jsx jsx */
-import React, { useState, useEffect } from 'react';
-import { css, jsx } from '@emotion/core';
+import React, { useState, useEffect, useMemo } from "react";
+import { css, jsx } from "@emotion/core";
 
-import * as Fonts from 'fonts';
-import { clearFix } from 'polished';
+import Fonts from "fonts";
+import { Sector, gridUnitSize } from "./grid/sector";
 
 const _ProgramInfo = ({ program }) => {
 	const { name, desc, icon, color, speed, maxSize, currentSize, commands } = program;
-	
+
 	const [selectedCommand, setSelectedCommand] = useState(null);
+	const selectCommandPerIndex = useMemo(
+		() => commands?.map(command => () => setSelectedCommand(command)),
+		[commands, setSelectedCommand],
+	);
 	useEffect(() => {
 		setSelectedCommand(null);
 	}, [program]);
 
-	return <div css={styles.container}>
-		<div css={clearFix()}>
-			<img src={icon} alt={name} css={styles.icon} style={{ background: color }} />
-			{speed && <>Move: {speed}<br /></>}
-			{maxSize && <>Max Size: {maxSize}<br /></>}
-			{currentSize && <>Current Size: {currentSize}</>}
-		</div>
-		<span css={styles.h1}>{name}</span>
-		<span css={styles.p}>{desc}</span>
-		{commands && <>
-			<span css={styles.h2}>Commands</span>
-			<div css={styles.commandContainer}>
-				{commands.map(command => (
-					<button onClick={() => setSelectedCommand(command)}>{command.name}</button>
-				))}
-			</div>
-				{selectedCommand && (
-					<span css={styles.p}>
-						{selectedCommand.name}:
-						<br />
-						{selectedCommand.desc || "<Command description not found>"}
-					</span>
+	return (
+		<div css={styles.container}>
+			<div css={styles.basicInfoContainer}>
+				{commands ? (
+					<svg css={styles.icon}>
+						<Sector {...{ icon, color }} />
+					</svg>
+				) : (
+					<img src={icon} alt={name} css={styles.icon} style={{ background: color }} />
 				)}
-		</>}
-	</div>;
+				{speed && <span>Move: {speed}</span>}
+				{maxSize && <span>Max Size: {maxSize}</span>}
+				{currentSize && <span>Current Size: {currentSize}</span>}
+			</div>
+			<span css={styles.h1}>{name}</span>
+			<span css={styles.p}>{desc}</span>
+			{commands && (
+				<>
+					<span css={styles.h2}>Commands</span>
+					<div css={styles.commandContainer}>
+						{commands.map((command, i) => (
+							<button key={i} onClick={selectCommandPerIndex[i]}>
+								{command.name}
+							</button>
+						))}
+					</div>
+					{selectedCommand && (
+						<span css={styles.p}>
+							{selectedCommand.name}:
+							<br />
+							{selectedCommand.desc || "<Command description not found>"}
+						</span>
+					)}
+				</>
+			)}
+		</div>
+	);
 };
 export const ProgramInfo = React.memo(_ProgramInfo);
 
@@ -46,9 +62,18 @@ const styles = {
 		width: 120px;
 		padding: 4px;
 	`,
+	basicInfoContainer: css`
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: center;
+		height: ${gridUnitSize}px;
+		margin-bottom: 6px;
+	`,
 	icon: css`
-		float: left;
-		margin: 0 6px 6px 0;
+		width: ${gridUnitSize}px;
+		height: ${gridUnitSize}px;
+		margin-right: 6px;
 	`,
 	h1: css`
 		display: block;
@@ -60,7 +85,7 @@ const styles = {
 		${Fonts.O4b_25}
 		margin-bottom: 2px;
 		text-transform: uppercase;
-		color: #CCC;
+		color: #ccc;
 	`,
 	p: css`
 		display: block;
@@ -76,7 +101,7 @@ const styles = {
 			width: 100%;
 			line-height: 20px;
 			text-transform: uppercase;
-			background: #FFF4;
+			background: #fff4;
 			cursor: pointer;
 
 			&:hover {
@@ -84,4 +109,4 @@ const styles = {
 			}
 		}
 	`,
-}
+};
