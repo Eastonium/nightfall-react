@@ -20,7 +20,7 @@ export class GridPosition extends Position {
 	}
 }
 
-const cellState =
+const cellState = (
 	"01110000001110" +
 	"11111000011111" +
 	"11111000011111" +
@@ -31,7 +31,10 @@ const cellState =
 	"11110000011111" +
 	"11111000011111" +
 	"11111000011111" +
-	"01110000001110";
+	"01110000001110"
+)
+	.split("")
+	.map(e => !!+e);
 
 const cellStyle =
 	"00000000000000" +
@@ -119,12 +122,10 @@ const _DataBattle = ({ id, ...props }) => {
 		if (!selectedProgram) return null;
 
 		const [packId, programId] = selectedProgram.type.split(":");
-		if (mapObjects.includes(selectedProgram)) return packConfig[packId].objects[programId];
+		if (mapObjects.includes(selectedProgram))
+			return { instance: selectedProgram, ...packConfig[packId].objects[programId] };
 		if (programs.includes(selectedProgram)) {
-			return {
-				...packConfig[packId].programs[programId],
-				currentSize: selectedProgram.slug.length,
-			};
+			return { instance: selectedProgram, ...packConfig[packId].programs[programId] };
 		}
 
 		return null;
@@ -140,7 +141,7 @@ const _DataBattle = ({ id, ...props }) => {
 			<div css={styles.layoutContainer}>
 				<DataBattleContext.Provider value={{ id, columns, rows }}>
 					<Window title="spybot" sectioned>
-						<img src={spybotImage} alt="spybot" style={{ display: "block" }} />
+						<img src={spybotImage} alt="spybot" css={{ display: "block" }} />
 					</Window>
 					<Window
 						css={styles.programInfoWindow}
@@ -157,8 +158,8 @@ const _DataBattle = ({ id, ...props }) => {
 					{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
 					<Grid
 						css={styles.grid}
-						{...{ cellState, cellStyle, mapObjects, programs, setSelectedProgram }}
-						selectedProgramPosition={selectedProgram?.pos ?? selectedProgram?.slug?.[0]}
+						{...{ cellState, cellStyle, mapObjects, programs }}
+						{...{ setSelectedProgram, selectedProgramInfo }}
 					/>
 				</DataBattleContext.Provider>
 			</div>

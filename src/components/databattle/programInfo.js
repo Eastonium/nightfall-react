@@ -6,7 +6,7 @@ import Fonts from "fonts";
 import { Sector, gridUnitSize } from "./grid/sector";
 
 const _ProgramInfo = ({ program }) => {
-	const { name, desc, icon, color, speed, maxSize, currentSize, commands } = program;
+	const { instance, name, desc, icon, color, speed, maxSize, commands } = program;
 
 	const [selectedCommand, setSelectedCommand] = useState(null);
 	const selectCommandPerIndex = useMemo(
@@ -21,15 +21,17 @@ const _ProgramInfo = ({ program }) => {
 		<div css={styles.container}>
 			<div css={styles.basicInfoContainer}>
 				{commands ? (
-					<svg css={styles.icon}>
-						<Sector {...{ icon, color }} />
-					</svg>
+					<>
+						<svg css={styles.icon}>
+							<Sector {...{ icon, color }} />
+						</svg>
+						<span>Move: {speed}</span>
+						<span>Max Size: {maxSize}</span>
+						<span>Current Size: {instance.slug.length}</span>
+					</>
 				) : (
-					<img src={icon} alt={name} css={styles.icon} style={{ background: color }} />
+					<img src={icon} alt={name} css={styles.icon} />
 				)}
-				{speed && <span>Move: {speed}</span>}
-				{maxSize && <span>Max Size: {maxSize}</span>}
-				{currentSize && <span>Current Size: {currentSize}</span>}
 			</div>
 			<span css={styles.h1}>{name}</span>
 			<span css={styles.p}>{desc}</span>

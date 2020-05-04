@@ -1,30 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback, useMemo } from "react";
 
-import { PackConfigContext } from 'game';
-import { DataBattleContext } from '..';
-import { Position } from './position';
-import { gridUnitSize, Sector, SectorClipPath, SectorSelectionIndicator, Tile } from './sector';
+import { PackConfigContext } from "game";
+import { DataBattleContext } from "..";
+import { Position } from "./position";
+import { gridUnitSize, Sector, SectorClipPath, SectorSelectionIndicator, Tile } from "./sector";
 
 export const Grid = ({
-	cellState, cellStyle, mapObjects, programs,
-	selectedProgramPosition, setSelectedProgram,
+	cellState,
+	cellStyle,
+	mapObjects,
+	programs,
+	setSelectedProgram,
+	selectedProgramInfo,
 	...props
 }) => {
 	const { columns, rows } = useContext(DataBattleContext);
 
+	const cellEmptyState = useMemo(() => {
+		const cellEmptyState = cellState.slice();
+		programs.forEach(program =>
+			program.slug.forEach(pos => (cellEmptyState[pos.sectorIndex] = false)),
+		);
+		return cellEmptyState;
+	}, [cellState, programs]);
+
+	const selectedProgramPosition =
+		selectedProgramInfo?.instance?.pos ?? selectedProgramInfo?.instance?.slug?.[0];
+
 	return (
 		<div {...props}>
 			<svg width={columns * gridUnitSize} height={rows * gridUnitSize}>
-				{[...Array(columns * rows)].map((_, sectorIndex) => {
-					const column = sectorIndex % columns;
-					const row = Math.floor(sectorIndex / columns);
-					return !!+cellState[sectorIndex]
-						// TODO: find a better way to check if a program's slug occupies that space
-						&& !programs.some(program => program.slug.some(
-							pos => pos.column === column && pos.row === row
-						))
-						&& <Tile key={sectorIndex} {...{ column, row }} />;
-				})}
+				{cellEmptyState.map(
+					(isEmpty, sectorIndex) =>
+						isEmpty && (
+							<Tile
+								key={sectorIndex}
+								column={sectorIndex % columns}
+								row={Math.floor(sectorIndex / columns)}
+							/>
+						),
+				)}
 				{mapObjects.map((mapObject, i) => (
 					<MapObject key={i} {...{ mapObject, setSelectedProgram }} />
 				))}
@@ -32,41 +47,52 @@ export const Grid = ({
 				{programs.map((program, i) => (
 					<Program key={i} {...{ program, setSelectedProgram }} />
 				))}
-				{selectedProgramPosition && <SectorSelectionIndicator
-					// The key makes it create a new element each time the selected sector changes
-					// This way the the animation resets
-					key={selectedProgramPosition.sectorIndex}
-					column={selectedProgramPosition.column}
-					row={selectedProgramPosition.row}
-				/>}
+				{selectedProgramPosition && (
+					<SectorSelectionIndicator
+						// The key makes it create a new element each time the selected sector changes
+						// This way the the animation resets
+						key={selectedProgramPosition.sectorIndex}
+						column={selectedProgramPosition.column}
+						row={selectedProgramPosition.row}
+					/>
+				)}
 			</svg>
 		</div>
 	);
 };
 
-const MapObject = ({ mapObject, setSelectedProgram }) => {
+const _MapObject = ({ mapObject, setSelectedProgram }) => {
 	const packConfig = useContext(PackConfigContext);
 
 	const [packId, objectId] = mapObject.type.split(":");
 	const { icon } = packConfig[packId].objects[objectId];
 	const { column, row } = mapObject.pos;
 
-	return <image
-		x={column * gridUnitSize} y={row * gridUnitSize}
-		href={icon}
-		onClick={() => setSelectedProgram(mapObject)}
-	/>;
-};
+	const handleClick = useCallback(() => setSelectedProgram(mapObject), [
+		mapObject,
+		setSelectedProgram,
+	]);
 
-const Program = ({ program, setSelectedProgram }) => {
+	return (
+		<image x={column * gridUnitSize} y={row * gridUnitSize} href={icon} onClick={handleClick} />
+	);
+};
+const MapObject = React.memo(_MapObject);
+
+const _Program = ({ program, setSelectedProgram }) => {
 	const packConfig = useContext(PackConfigContext);
 
 	const [packId, programId] = program.type.split(":");
 	const { icon, color } = packConfig[packId].programs[programId];
 
-	return <g onClick={() => setSelectedProgram(program)}>
-		{program.slug.sort(Position.compare)
-			.map((pos, i, allPos) => {
+	const handleClick = useCallback(() => setSelectedProgram(program), [
+		program,
+		setSelectedProgram,
+	]);
+
+	return (
+		<g onClick={handleClick}>
+			{program.slug.sort(Position.compare).map((pos, i, allPos) => {
 				const { column, row } = pos;
 				const posRight = pos.clone().right();
 				const posDown = pos.clone().down();
@@ -79,8 +105,8 @@ const Program = ({ program, setSelectedProgram }) => {
 						connectDown={posDown && allPos.find(posDown.equals)}
 					/>
 				);
-			})
-		}
-	</g>;
+			})}
+		</g>
+	);
 };
-
+const Program = React.memo(_Program);
