@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
 /** @jsx jsx */
+import { useMemo, Fragment, Children, memo } from "react";
 import { css, jsx } from "@emotion/core";
 
 const WindowSection = props => <div css={styles.contentSection} {...props} />;
@@ -12,14 +12,14 @@ export const WindowContainer = ({ coverScreen, ...props }) => (
 const _Window = ({
 	x = 0,
 	y = 0,
-	width,
-	height,
-	title,
-	titleBarIcon,
-	titleBarButtonProps,
-	sectioned,
+	width = null,
+	height = null,
+	title = '',
+	titleBarIcon = null,
+	titleBarButtonProps = null,
+	sectioned = false,
 	children,
-	postFooter,
+	postFooter = null,
 	...props
 }) => {
 	const dynamicStyles = useMemo(
@@ -45,20 +45,20 @@ const _Window = ({
 				</div>
 			</div>
 			{children != null && (
-				<>
+				<Fragment>
 					<div css={styles.content}>
 						{sectioned
-							? React.Children.map(children, child => <WindowSection children={child} />)
+							? Children.map(children, child => <WindowSection children={child} />)
 							: children}
 					</div>
 					<div css={styles.footer} />
-				</>
+				</Fragment>
 			)}
 			{postFooter && <div>{postFooter}</div>}
 		</div>
 	);
 };
-export const Window = Object.assign(React.memo(_Window), { Section: WindowSection })
+export const Window = Object.assign(memo(_Window), { Section: WindowSection });
 
 const styles = {
 	windowContainer: coverScreen => css`

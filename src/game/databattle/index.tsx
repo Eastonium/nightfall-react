@@ -1,16 +1,18 @@
-import React, { useState, useMemo, useContext } from "react";
 /** @jsx jsx */
+import { useState, useMemo, useContext, memo, createContext } from "react";
 import { css, jsx } from "@emotion/core";
 
-import { Button } from "components/button";
-import { Window } from "components/window";
+import { Button } from "ui/components/button";
+import { Window } from "ui/components/window";
 
-import { PackConfigContext } from "game";
-import { ProgramInfo } from "./programInfo";
+import { PackConfigContext } from "..";
+import { ChitInfo } from "./components/chitInfo";
 import { Grid } from "./grid";
 import { Position } from "./grid/position";
 
-import spybotImage from "assets/base/textures/spybots/Snaptrax S45.png";
+import spybotImage from "assets/nightfall/textures/spybots/Snaptrax S45.png";
+
+import { Program } from "./program";
 
 const columns = 14;
 const rows = 11;
@@ -49,40 +51,40 @@ const cellStyle =
 	"00000000000000" +
 	"00000000000000";
 
-const mapObjects = [
+const chits = [
 	{
-		type: "base:data_item",
+		type: "nightfall:data_item",
 		pos: [1, 2],
 	},
 	{
-		type: "base:credits",
+		type: "nightfall:credits",
 		pos: [1, 5],
 	},
 	{
-		type: "base:credits",
+		type: "nightfall:credits",
 		pos: [1, 8],
 	},
 	{
-		type: "base:upload_zone",
+		type: "nightfall:upload_zone",
 		pos: [11, 1],
 	},
 	{
-		type: "base:upload_zone",
+		type: "nightfall:upload_zone",
 		pos: [12, 1],
 	},
 	{
-		type: "base:upload_zone",
+		type: "nightfall:upload_zone",
 		pos: [11, 9],
 	},
 	{
-		type: "base:upload_zone",
+		type: "nightfall:upload_zone",
 		pos: [12, 9],
 	},
 ].map(({ type, pos }) => ({ type, pos: new GridPosition(pos) }));
 
 const programs = [
 	{
-		type: "base:dog_2",
+		type: "nightfall:dog_2",
 		slug: [
 			[3, 1],
 			[3, 2],
@@ -91,45 +93,57 @@ const programs = [
 		],
 	},
 	{
-		type: "base:dog_2",
+		type: "nightfall:dog_2",
 		slug: [[2, 2]],
 	},
 	{
-		type: "base:dog_2",
+		type: "nightfall:dog_2",
 		slug: [[0, 3]],
 	},
 	{
-		type: "base:dog_2",
+		type: "nightfall:dog_2",
 		slug: [[1, 4]],
 	},
 	{
-		type: "base:dog_2",
+		type: "nightfall:dog_2",
 		slug: [[2, 5]],
 	},
 	{
-		type: "base:dog_2",
+		type: "nightfall:dog_2",
 		slug: [[1, 7]],
 	},
 ].map(({ type, slug }) => ({ type, slug: slug.map(pos => new GridPosition(pos)) }));
 
-export const DataBattleContext = React.createContext(null);
+export const DataBattleContext = createContext(null);
 
 const _DataBattle = ({ id, ...props }) => {
 	const packConfig = useContext(PackConfigContext);
 
-	const [selectedProgram, setSelectedProgram] = useState(null);
-	const selectedProgramInfo = useMemo(() => {
-		if (!selectedProgram) return null;
+	const cellEmptyState = useMemo(
+		() => {
+			const cellEmptyState = cellState.slice();
+			programs.forEach(program =>
+				program.slug.forEach(pos => (cellEmptyState[pos.sectorIndex] = false)),
+			);
+			return cellEmptyState;
+		},
+		[
+			/*cellState, programs*/
+		],
+	);
 
-		const [packId, programId] = selectedProgram.type.split(":");
-		if (mapObjects.includes(selectedProgram))
-			return { instance: selectedProgram, ...packConfig[packId].objects[programId] };
-		if (programs.includes(selectedProgram)) {
-			return { instance: selectedProgram, ...packConfig[packId].programs[programId] };
-		}
+	const [selectedChit, setSelectedChit] = useState(null);
+	const selectedChitInfo = useMemo(() => {
+		if (!selectedChit) return null;
+
+		const [packId, chitId] = selectedChit.type.split(":");
+		if (chits.includes(selectedChit))
+			return { instance: selectedChit, ...packConfig[packId].chits[chitId] };
+		if (programs.includes(selectedChit))
+			return { instance: selectedChit, ...packConfig[packId].programs[chitId] };
 
 		return null;
-	}, [/*mapObjects, programs, */ packConfig, selectedProgram]);
+	}, [/*chits, programs, */ packConfig, selectedChit]);
 
 	return (
 		<Window
@@ -144,7 +158,7 @@ const _DataBattle = ({ id, ...props }) => {
 						<img src={spybotImage} alt="spybot" css={{ display: "block" }} />
 					</Window>
 					<Window
-						css={styles.programInfoWindow}
+						css={styles.chitInfoWindow}
 						title="program.info"
 						sectioned
 						postFooter={
@@ -153,20 +167,20 @@ const _DataBattle = ({ id, ...props }) => {
 							</Button>
 						}
 					>
-						{selectedProgramInfo ? <ProgramInfo program={selectedProgramInfo} /> : ""}
+						{selectedChitInfo ? <ChitInfo program={selectedChitInfo} /> : ""}
 					</Window>
 					{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
 					<Grid
 						css={styles.grid}
-						{...{ cellState, cellStyle, mapObjects, programs }}
-						{...{ setSelectedProgram, selectedProgramInfo }}
+						{...{ cellEmptyState, chits, programs }}
+						{...{ setSelectedChit, selectedChitInfo }}
 					/>
 				</DataBattleContext.Provider>
 			</div>
 		</Window>
 	);
 };
-export const DataBattle = React.memo(_DataBattle);
+export const DataBattle = memo(_DataBattle);
 
 const styles = {
 	layoutContainer: css`
@@ -175,7 +189,7 @@ const styles = {
 		grid-gap: 4px;
 		padding: 4px;
 	`,
-	programInfoWindow: css`
+	chitInfoWindow: css`
 		grid-row: 2;
 	`,
 	beginButton: css`

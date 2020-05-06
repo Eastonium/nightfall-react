@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Fragment, memo } from "react";
 import { css, jsx } from "@emotion/core";
 
-import Fonts from "fonts";
-import { Sector, gridUnitSize } from "./grid/sector";
+import Fonts from "ui/fonts";
+import { Segment, gridUnitSize } from "../grid/components/segment";
 
 const _ProgramInfo = ({ program }) => {
 	const { instance, name, desc, icon, color, speed, maxSize, commands } = program;
@@ -21,14 +21,14 @@ const _ProgramInfo = ({ program }) => {
 		<div css={styles.container}>
 			<div css={styles.basicInfoContainer}>
 				{commands ? (
-					<>
+					<Fragment>
 						<svg css={styles.icon}>
-							<Sector {...{ icon, color }} />
+							<Segment {...{ icon, color }} />
 						</svg>
 						<span>Move: {speed}</span>
 						<span>Max Size: {maxSize}</span>
 						<span>Current Size: {instance.slug.length}</span>
-					</>
+					</Fragment>
 				) : (
 					<img src={icon} alt={name} css={styles.icon} />
 				)}
@@ -36,7 +36,7 @@ const _ProgramInfo = ({ program }) => {
 			<span css={styles.h1}>{name}</span>
 			<span css={styles.p}>{desc}</span>
 			{commands && (
-				<>
+				<Fragment>
 					<span css={styles.h2}>Commands</span>
 					<div css={styles.commandContainer}>
 						{commands.map((command, i) => (
@@ -52,12 +52,12 @@ const _ProgramInfo = ({ program }) => {
 							{selectedCommand.desc || "<Command description not found>"}
 						</span>
 					)}
-				</>
+				</Fragment>
 			)}
 		</div>
 	);
 };
-export const ProgramInfo = React.memo(_ProgramInfo);
+export const ChitInfo = memo(_ProgramInfo);
 
 const styles = {
 	container: css`

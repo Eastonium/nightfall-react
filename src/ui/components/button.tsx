@@ -1,32 +1,37 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { desaturate, darken } from 'polished';
+import { css, jsx } from "@emotion/core";
+import { desaturate, darken } from "polished";
 
-import * as Fonts from 'fonts';
+import * as Fonts from "ui/fonts";
 
 const buttonColors = {
 	blue: "#1348E7",
 	cyan: "#0088CC",
 	green: "#3cd515",
 	red: "#F5042F",
-}
+};
 
 const getGradientColors = (color, active) => {
 	if (!active) color = desaturate(0.5, color);
 	return [color, darken(0.8, color)];
 };
 
-export const Button = Object.assign(
-	function Button({ bold, color = buttonColors.blue, big, fill, children, wrapperProps, ...props }) {
-		return <div css={styles.buttonWrapper(fill)} {...wrapperProps}>
-			<button css={styles.primaryButton(bold, color, big)} {...props}>
-				<span>{children}</span>
-			</button>
-		</div>;
-	},
-	{ colors: buttonColors },
+const _Button = ({
+	bold = false,
+	color = buttonColors.blue,
+	big = false,
+	fill = false,
+	children,
+	wrapperProps = {},
+	...props
+}) => (
+	<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
+		<button css={styles.primaryButton(bold, color, big)} {...props}>
+			<span>{children}</span>
+		</button>
+	</div>
 );
+export const Button = Object.assign(_Button, { colors: buttonColors });
 
 export const MetalButton = ({ dark, small, fill, wrapperProps, ...props }) => (
 	<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
@@ -42,29 +47,36 @@ const styles = {
 		${bold ? Fonts.O4b_25 : ""}
 		width: 100%;
 		border: 1px solid;
-		border-image: linear-gradient(to bottom right, #FFF, #AAA 10%, #222 85%) 1;
+		border-image: linear-gradient(to bottom right, #fff, #aaa 10%, #222 85%) 1;
 		padding: 1px;
 		box-shadow: inset 0 0 0 1px #666;
-		color: #FFF;
+		color: #fff;
 		text-transform: ${bold ? "lowercase" : "uppercase"};
-		
+
 		> span {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			height: ${big ? 24 : 16}px;
 			border: 1px solid;
-			border-image: linear-gradient(to top left, #EEE, #999 10%, #111 85%) 1;
+			border-image: linear-gradient(to top left, #eee, #999 10%, #111 85%) 1;
 			padding: 0 12px;
-			background: linear-gradient(to bottom right, ${getGradientColors(color, false).join(", ")});
+			background: linear-gradient(
+				to bottom right,
+				${getGradientColors(color, false).join(", ")}
+			);
 		}
 
 		&:enabled {
 			cursor: pointer;
 
-			&:hover, &:focus {
+			&:hover,
+			&:focus {
 				> span {
-					background: linear-gradient(to bottom right, ${getGradientColors(color, true).join(", ")});
+					background: linear-gradient(
+						to bottom right,
+						${getGradientColors(color, true).join(", ")}
+					);
 				}
 			}
 		}
