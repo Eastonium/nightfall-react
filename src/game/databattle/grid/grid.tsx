@@ -8,7 +8,7 @@ import {
 	SegmentClipPath,
 	CellSelectionIndicator,
 	Tile,
-} from "./components/segment";
+} from "./segment";
 import { Chit as IChit } from "../chit";
 import { Program as IProgram } from "../program";
 

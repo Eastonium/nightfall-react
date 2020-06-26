@@ -3,9 +3,9 @@ import { useState, useEffect, useMemo, Fragment, memo } from "react";
 import { css, jsx } from "@emotion/core";
 
 import Fonts from "ui/fonts";
-import { Segment, gridUnitSize } from "../grid/components/segment";
-import { Chit } from "../chit";
-import { Program } from "../program";
+import { Segment, gridUnitSize } from "./grid/segment";
+import { Chit } from "./chit";
+import { Program } from "./program";
 
 interface ChitInfo {
 	chit: Chit | Program;

@@ -6,7 +6,7 @@ export default {
 		width: 14,
 		height: 11,
 	},
-	tileState: [
+	cellVoidState: [
 		" OOO      OOO ",
 		"OOOOO    OOOOO",
 		"OOOOO    OOOOO",
@@ -19,7 +19,7 @@ export default {
 		"OOOOO    OOOOO",
 		" OOO      OOO ",
 	],
-	tileStyle: {
+	cellStyle: {
 		map: [
 			"00000000000000",
 			"00000000000000",

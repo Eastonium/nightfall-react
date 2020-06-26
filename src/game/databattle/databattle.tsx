@@ -1,25 +1,16 @@
 /** @jsx jsx */
-import { useState, useMemo, memo, createContext } from "react";
+import { useState, memo, createContext } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { Button } from "ui/components/button";
 import { Window, WindowProps } from "ui/components/window";
 
-import { ChitInfo } from "./components/chitInfo";
+import { ChitInfo } from "./chitInfo";
 import { Grid } from "./grid";
-import { Position } from "./grid/position";
 
 import spybotImage from "assets/nightfall/textures/spybots/Snaptrax S45.png";
 import { Chit } from "./chit";
 import { Program } from "./program";
-
-const columns = 14;
-const rows = 11;
-export class GridPosition extends Position {
-	constructor(pos: [number, number] | number) {
-		super(pos, columns, rows);
-	}
-}
 
 export const DataBattleContext = createContext<{ id: any; columns: number; rows: number }>(null);
 
