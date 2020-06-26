@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 import { css, jsx } from "@emotion/core";
 import { desaturate, darken } from "polished";
 
@@ -11,46 +12,62 @@ const buttonColors = {
 	red: "#F5042F",
 };
 
-const getGradientColors = (color, active) => {
+const getGradientColors = (color: string, active: boolean) => {
 	if (!active) color = desaturate(0.5, color);
 	return [color, darken(0.8, color)];
 };
 
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+	bold?: boolean;
+	color?: "blue" | "cyan" | "green" | "red";
+	big?: boolean;
+	fill?: boolean;
+	children?: ReactNode;
+	wrapperProps?: HTMLAttributes<HTMLDivElement>;
+}
 const _Button = ({
 	bold = false,
-	color = buttonColors.blue,
+	color = "blue",
 	big = false,
 	fill = false,
 	children,
 	wrapperProps = {},
 	...props
-}) => (
+}: ButtonProps) => (
 	<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
-		<button css={styles.primaryButton(bold, color, big)} {...props}>
+		<button css={styles.primaryButton(bold, buttonColors[color], big)} {...props}>
 			<span>{children}</span>
 		</button>
 	</div>
 );
 export const Button = Object.assign(_Button, { colors: buttonColors });
 
-export const MetalButton = ({ dark, small, fill, wrapperProps, ...props }) => (
+//////////////////////////////////////////////////////////////////////////////////
+
+interface MetalButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+	dark?: boolean;
+	small?: boolean;
+	fill?: boolean;
+	wrapperProps?: HTMLAttributes<HTMLDivElement>;
+}
+export const MetalButton = ({ dark, small, fill, wrapperProps, ...props }: MetalButtonProps) => (
 	<div css={styles.buttonWrapper(fill)} {...wrapperProps}>
 		<button css={styles.metalButton(dark, small)} {...props} />
 	</div>
 );
 
 const styles = {
-	buttonWrapper: fill => css`
-		display: ${fill ? "" : "inline-"}block;
+	buttonWrapper: (fill: boolean) => css`
+		display: ${fill ? "block" : "inline-block"};
 	`,
-	primaryButton: (bold, color, big) => css`
+	primaryButton: (bold: boolean, color: string, big: boolean) => css`
 		${bold ? Fonts.O4b_25 : ""}
 		width: 100%;
 		border: 1px solid;
-		border-image: linear-gradient(to bottom right, #fff, #aaa 10%, #222 85%) 1;
+		border-image: linear-gradient(to bottom right, #FFF, #AAA 10%, #222 85%) 1;
 		padding: 1px;
 		box-shadow: inset 0 0 0 1px #666;
-		color: #fff;
+		color: #FFF;
 		text-transform: ${bold ? "lowercase" : "uppercase"};
 
 		> span {
@@ -59,7 +76,7 @@ const styles = {
 			align-items: center;
 			height: ${big ? 24 : 16}px;
 			border: 1px solid;
-			border-image: linear-gradient(to top left, #eee, #999 10%, #111 85%) 1;
+			border-image: linear-gradient(to top left, #EEE, #999 10%, #111 85%) 1;
 			padding: 0 12px;
 			background: linear-gradient(
 				to bottom right,
@@ -84,17 +101,17 @@ const styles = {
 			background: linear-gradient(to bottom right, #666, #222);
 		}
 	`,
-	metalButton: (dark, small) => css`
+	metalButton: (dark: boolean, small: boolean) => css`
 		position: relative;
 		${Fonts.Abstract};
-		${small ? "font-size: 8px;" : ""}
+		${small ? css({ fontSize: "8px" }) : ""}
 		width: 100%;
 		height: ${small ? "12px" : "20px"};
 		padding: ${small ? "0 8px 1px 7px" : "0 10px 1px 9px"};
 		border-width: 1px 0 0 1px;
 		border-style: solid;
-		border-image: linear-gradient(${dark ? "#68719C , #31384e" : "#EEE, #999"}) 1;
-		${dark ? "color: #E0E2EB;" : "text-shadow: 0px 1px #FFFB;"}
+		border-image: linear-gradient(${dark ? "#68719C , #31384E" : "#EEE, #999"}) 1;
+		${dark ? css({ color: "#E0E2EB" }) : css({ textShadow: "0px 1px #FFFB" })}
 		background: linear-gradient(${dark ? "#52597D, #282E40" : "#DDD, #777"});
 
 		&::after {
@@ -114,7 +131,7 @@ const styles = {
 
 			&:hover, &:focus {
 				border-image: linear-gradient(${dark ? "#334ED1 , #14286C" : "#FFF, #CDE1FE, #669EFF"}) 1;
-				${dark ? "color: #e0e2eb;" : "text-shadow: 0px 1px #FFFB;"}
+				${dark ? css({ color: "#E0E2EB" }) : css({ textShadow: "0px 1px #FFFB" })}
 				background: linear-gradient(${dark ? "#273DAA, #102156" : "#ECFCFC, #76ABFC, #2674FF"});
 
 				&::after {
@@ -124,7 +141,7 @@ const styles = {
 		}
 		&:disabled {
 			color: ${dark ? "#282E40" : "#777"};
-			text-shadow: 0px 1px #FFF${dark ? 1 : 3};
+			text-shadow: 0px 1px ${dark ? "#FFF1" : "#FFF3"};
 		}
 	`,
 };

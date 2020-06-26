@@ -1,27 +1,51 @@
 /** @jsx jsx */
-import { useMemo, Fragment, Children, memo } from "react";
+import {
+	useMemo,
+	Fragment,
+	Children,
+	memo,
+	HTMLAttributes,
+	ReactNode,
+	ButtonHTMLAttributes,
+} from "react";
 import { css, jsx } from "@emotion/core";
 
-const WindowSection = props => <div css={styles.contentSection} {...props} />;
+const WindowSection = (props: HTMLAttributes<HTMLDivElement>) => (
+	<div css={styles.contentSection} {...props} />
+);
 
-export const WindowContainer = ({ coverScreen, ...props }) => (
+interface WindowContainerProps extends HTMLAttributes<HTMLDivElement> {
+	coverScreen?: boolean;
+}
+export const WindowContainer = ({ coverScreen, ...props }: WindowContainerProps) => (
 	<div css={styles.windowContainer(coverScreen)} {...props} />
 );
 
-/* eslint-disable jsx-a11y/alt-text */
+export interface WindowProps extends HTMLAttributes<HTMLDivElement> {
+	x?: number;
+	y?: number;
+	width?: number;
+	height?: number;
+	title?: string;
+	titleBarIcon?: ReactNode;
+	titleBarButtonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
+	sectioned?: boolean;
+	children?: ReactNode;
+	postFooter?: ReactNode;
+}
 const _Window = ({
 	x = 0,
 	y = 0,
-	width = null,
-	height = null,
-	title = '',
+	width,
+	height,
+	title,
 	titleBarIcon = null,
 	titleBarButtonProps = null,
 	sectioned = false,
 	children,
 	postFooter = null,
 	...props
-}) => {
+}: WindowProps) => {
 	const dynamicStyles = useMemo(
 		() => ({
 			[x > 0 ? "top" : "bottom"]: Math.abs(x),
@@ -35,7 +59,7 @@ const _Window = ({
 		<div css={[styles.window, dynamicStyles]} className="Window" {...props}>
 			<div>
 				<div css={styles.bar(!!titleBarIcon)}>
-					{titleBarIcon && <img {...titleBarIcon} />}
+					{titleBarIcon}
 					{title && <div className="title">{title}</div>}
 					{titleBarButtonProps && (
 						<div css={styles.barButtonContainer}>
@@ -61,7 +85,7 @@ const _Window = ({
 export const Window = Object.assign(memo(_Window), { Section: WindowSection });
 
 const styles = {
-	windowContainer: coverScreen => css`
+	windowContainer: (coverScreen: boolean) => css`
 		position: ${coverScreen ? "fixed" : "relative"};
 		top: 0;
 		left: 0;
@@ -88,7 +112,7 @@ const styles = {
 			border-bottom: 1px solid #000;
 		}
 	`,
-	bar: hasIcon => css`
+	bar: (hasIcon: boolean) => css`
 		flex: 0 0 auto;
 		height: 17px;
 		border-width: 1px 0 0 1px;
@@ -98,11 +122,7 @@ const styles = {
 		background: linear-gradient(#ddd, #777);
 		color: #000;
 
-		${hasIcon
-			? css`
-					padding-left: 0;
-			  `
-			: ""}
+		${hasIcon ? css({ paddingLeft: 0 }) : ""}
 
 		> div {
 			flex: 0 0 auto;

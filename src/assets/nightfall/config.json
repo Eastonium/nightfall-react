@@ -1,9 +1,0 @@
-{
-	"programs": [
-		"programs/ally_programs",
-		"programs/enemy_programs"
-	],
-	"chits": [
-		"chits"
-	]
-}

@@ -4,42 +4,46 @@ import { css, jsx } from "@emotion/core";
 
 import Fonts from "ui/fonts";
 import { Segment, gridUnitSize } from "../grid/components/segment";
+import { Chit } from "../chit";
+import { Program } from "../program";
 
-const _ProgramInfo = ({ program }) => {
-	const { instance, name, desc, icon, color, speed, maxSize, commands } = program;
-
+interface ChitInfo {
+	chit: Chit | Program;
+}
+const _ChitInfo = ({ chit }: ChitInfo) => {
+	const programCommands = chit instanceof Program ? chit.config.commands : null;
 	const [selectedCommand, setSelectedCommand] = useState(null);
 	const selectCommandPerIndex = useMemo(
-		() => commands?.map(command => () => setSelectedCommand(command)),
-		[commands, setSelectedCommand],
+		() => programCommands?.map(command => () => setSelectedCommand(command)),
+		[programCommands, setSelectedCommand],
 	);
 	useEffect(() => {
 		setSelectedCommand(null);
-	}, [program]);
+	}, [chit]);
 
 	return (
 		<div css={styles.container}>
 			<div css={styles.basicInfoContainer}>
-				{commands ? (
+				{chit instanceof Program ? (
 					<Fragment>
 						<svg css={styles.icon}>
-							<Segment {...{ icon, color }} />
+							<Segment iconPath={chit.iconPath} color={chit.config.color} />
 						</svg>
-						<span>Move: {speed}</span>
-						<span>Max Size: {maxSize}</span>
-						<span>Current Size: {instance.slug.length}</span>
+						<span>Move: {chit.config.speed}</span>
+						<span>Max Size: {chit.config.maxSize}</span>
+						<span>Current Size: {chit.slug.length}</span>
 					</Fragment>
 				) : (
-					<img src={icon} alt={name} css={styles.icon} />
+					<img src={chit.iconPath} alt={chit.config.name} css={styles.icon} />
 				)}
 			</div>
-			<span css={styles.h1}>{name}</span>
-			<span css={styles.p}>{desc}</span>
-			{commands && (
+			<span css={styles.h1}>{chit.config.name}</span>
+			<span css={styles.p}>{chit.config.desc}</span>
+			{chit instanceof Program && (
 				<Fragment>
 					<span css={styles.h2}>Commands</span>
 					<div css={styles.commandContainer}>
-						{commands.map((command, i) => (
+						{programCommands.map((command, i) => (
 							<button key={i} onClick={selectCommandPerIndex[i]}>
 								{command.name}
 							</button>
@@ -57,7 +61,7 @@ const _ProgramInfo = ({ program }) => {
 		</div>
 	);
 };
-export const ChitInfo = memo(_ProgramInfo);
+export const ChitInfo = memo(_ChitInfo);
 
 const styles = {
 	container: css`

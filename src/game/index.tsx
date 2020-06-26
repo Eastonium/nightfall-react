@@ -1,61 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { WindowContainer } from "ui/components/window";
 import { Map } from "./map";
 import { DataBattle } from "./databattle";
+import { ChitConfig } from "./databattle/chit";
+import { ProgramConfig } from "./databattle/program";
 
-const loadConfig = async (packId) => {
-	const config = await import(`assets/${packId}/config.json`);
+import nightfallPackConfig from "assets/nightfall";
 
-	const [programData, chitData] = await Promise.all([
-		Promise.all(config.programs.map(file => import(`assets/${packId}/${file}.json`))),
-		Promise.all(config.chits.map(file => import(`assets/${packId}/${file}.json`))),
-	]);
+interface GameConfig {
+	[key: string]: PackConfig;
+}
+export interface PackConfig {
+	chits?: ChitConfig[];
+	programs?: ProgramConfig[];
+}
 
-	const programs = programData.reduce(
-		(programs, module: any) => Object.assign(programs, module.default),
-		{},
-	);
-	const programIcons = await Promise.all(
-		Object.keys(programs).map(key =>
-			import(`assets/${packId}/textures/grid/programs/${key}.png`),
-		),
-	);
-	Object.keys(programs).forEach((key, i) => (programs[key].icon = programIcons[i].default));
+export const GameConfigContext = React.createContext<GameConfig>(null);
 
-	const chits = chitData.reduce(
-		(chits, module: any) => Object.assign(chits, module.default),
-		{},
-	);
-	const chitIcons = await Promise.all(
-		Object.keys(chits).map(key => import(`assets/${packId}/textures/grid/chits/${key}.png`)),
-	);
-	Object.keys(chits).forEach((key, i) => (chits[key].icon = chitIcons[i].default));
-
-	return { programs, chits };
-};
-
-export const PackConfigContext = React.createContext(null);
-
-export const Game = ({ packId }) => {
-	const [config, setConfig] = useState({});
-
-	const packLoaded = !!config[packId];
-	useEffect(() => {
-		if (packLoaded) return;
-		loadConfig(packId).then(loadedConfig => {
-			setConfig(config => ({ ...config, [packId]: loadedConfig }));
-		});
-	}, [packId, packLoaded]);
-
-	if (!packLoaded) return <>Loading...</>;
+interface GameProps {
+	packId: string;
+}
+export const Game = ({ packId }: GameProps) => {
+	const [config, setConfig] = useState<GameConfig>({ nightfall: nightfallPackConfig });
 
 	return (
-		<PackConfigContext.Provider value={config}>
+		<GameConfigContext.Provider value={config}>
 			<Map />
 			<WindowContainer coverScreen>
 				<DataBattle id={0} x={40} y={30} />
 			</WindowContainer>
-		</PackConfigContext.Provider>
+		</GameConfigContext.Provider>
 	);
 };

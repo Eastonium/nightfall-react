@@ -1,149 +1,33 @@
 /** @jsx jsx */
-import { useState, useMemo, useContext, memo, createContext } from "react";
+import { useState, useMemo, memo, createContext } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { Button } from "ui/components/button";
-import { Window } from "ui/components/window";
+import { Window, WindowProps } from "ui/components/window";
 
-import { PackConfigContext } from "..";
 import { ChitInfo } from "./components/chitInfo";
 import { Grid } from "./grid";
 import { Position } from "./grid/position";
 
 import spybotImage from "assets/nightfall/textures/spybots/Snaptrax S45.png";
-
+import { Chit } from "./chit";
 import { Program } from "./program";
 
 const columns = 14;
 const rows = 11;
 export class GridPosition extends Position {
-	constructor(pos) {
+	constructor(pos: [number, number] | number) {
 		super(pos, columns, rows);
 	}
 }
 
-const cellState = (
-	"01110000001110" +
-	"11111000011111" +
-	"11111000011111" +
-	"11111000001111" +
-	"11111001111111" +
-	"11111111111111" +
-	"11111110011111" +
-	"11110000011111" +
-	"11111000011111" +
-	"11111000011111" +
-	"01110000001110"
-)
-	.split("")
-	.map(e => !!+e);
+export const DataBattleContext = createContext<{ id: any; columns: number; rows: number }>(null);
 
-const cellStyle =
-	"00000000000000" +
-	"00000000000000" +
-	"00000000000000" +
-	"00000001111111" +
-	"11111110000001" +
-	"10000000000001" +
-	"10000001111111" +
-	"11111110000000" +
-	"00000000000000" +
-	"00000000000000" +
-	"00000000000000";
-
-const chits = [
-	{
-		type: "nightfall:data_item",
-		pos: [1, 2],
-	},
-	{
-		type: "nightfall:credits",
-		pos: [1, 5],
-	},
-	{
-		type: "nightfall:credits",
-		pos: [1, 8],
-	},
-	{
-		type: "nightfall:upload_zone",
-		pos: [11, 1],
-	},
-	{
-		type: "nightfall:upload_zone",
-		pos: [12, 1],
-	},
-	{
-		type: "nightfall:upload_zone",
-		pos: [11, 9],
-	},
-	{
-		type: "nightfall:upload_zone",
-		pos: [12, 9],
-	},
-].map(({ type, pos }) => ({ type, pos: new GridPosition(pos) }));
-
-const programs = [
-	{
-		type: "nightfall:dog_2",
-		slug: [
-			[3, 1],
-			[3, 2],
-			[3, 3],
-			[3, 4],
-		],
-	},
-	{
-		type: "nightfall:dog_2",
-		slug: [[2, 2]],
-	},
-	{
-		type: "nightfall:dog_2",
-		slug: [[0, 3]],
-	},
-	{
-		type: "nightfall:dog_2",
-		slug: [[1, 4]],
-	},
-	{
-		type: "nightfall:dog_2",
-		slug: [[2, 5]],
-	},
-	{
-		type: "nightfall:dog_2",
-		slug: [[1, 7]],
-	},
-].map(({ type, slug }) => ({ type, slug: slug.map(pos => new GridPosition(pos)) }));
-
-export const DataBattleContext = createContext(null);
-
-const _DataBattle = ({ id, ...props }) => {
-	const packConfig = useContext(PackConfigContext);
-
-	const cellEmptyState = useMemo(
-		() => {
-			const cellEmptyState = cellState.slice();
-			programs.forEach(program =>
-				program.slug.forEach(pos => (cellEmptyState[pos.sectorIndex] = false)),
-			);
-			return cellEmptyState;
-		},
-		[
-			/*cellState, programs*/
-		],
-	);
-
-	const [selectedChit, setSelectedChit] = useState(null);
-	const selectedChitInfo = useMemo(() => {
-		if (!selectedChit) return null;
-
-		const [packId, chitId] = selectedChit.type.split(":");
-		if (chits.includes(selectedChit))
-			return { instance: selectedChit, ...packConfig[packId].chits[chitId] };
-		if (programs.includes(selectedChit))
-			return { instance: selectedChit, ...packConfig[packId].programs[chitId] };
-
-		return null;
-	}, [/*chits, programs, */ packConfig, selectedChit]);
+interface DataBattleProps extends WindowProps {
+	id: any;
+}
+const _DataBattle = ({ id, ...props }: DataBattleProps) => {
+	const [selectedChit, setSelectedChit] = useState<Chit | Program>(null);
 
 	return (
 		<Window
@@ -167,13 +51,12 @@ const _DataBattle = ({ id, ...props }) => {
 							</Button>
 						}
 					>
-						{selectedChitInfo ? <ChitInfo program={selectedChitInfo} /> : ""}
+						{selectedChit ? <ChitInfo chit={selectedChit} /> : ""}
 					</Window>
 					{/* <Button bold wrapperProps={{ css: styles.beginButton }}>Begin Databattle</Button> */}
 					<Grid
 						css={styles.grid}
-						{...{ cellEmptyState, chits, programs }}
-						{...{ setSelectedChit, selectedChitInfo }}
+						{...{ cellVoidState, chits, programs, selectedChit, setSelectedChit }}
 					/>
 				</DataBattleContext.Provider>
 			</div>
