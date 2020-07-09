@@ -10,7 +10,7 @@ import { LevelDefinition } from "./level";
 import { Position } from "./grid/position";
 import { findProgramConfig, findChitConfig } from "game/game";
 
-export { DataBattle, DataBattleIdContext as DataBattleContext } from "./databattle";
+export { DataBattle, DataBattleIdContext } from "./databattle";
 
 type DataBattle = {
 	id: number;

@@ -1,6 +1,7 @@
 import React, { useContext, useCallback, Dispatch, SetStateAction } from "react";
+import { useSelectorWithProps } from "utils";
 
-import { DataBattleContext } from "../index";
+import { DataBattleIdContext, selectDatabattle } from "../index";
 import { Position } from "./position";
 import {
 	gridUnitSize,
@@ -27,21 +28,22 @@ export const Grid = ({
 	setSelectedChit,
 	...props
 }: GridProps) => {
-	const { columns, rows } = useContext(DataBattleContext);
+	const databattleId = useContext(DataBattleIdContext);
+	const { grid: { width, height } } = useSelectorWithProps(selectDatabattle, databattleId);
 
 	const selectedChitPosition =
-		selectedChit instanceof IProgram ? selectedChit.slug[0] : selectedChit.pos;
+		selectedChit instanceof IProgram ? selectedChit.slug[0] : selectedChit?.pos;
 
 	return (
 		<div {...props}>
-			<svg width={columns * gridUnitSize} height={rows * gridUnitSize}>
+			<svg width={width * gridUnitSize} height={height * gridUnitSize}>
 				{cellVoidState.map(
 					(isEmpty, sectorIndex) =>
 						isEmpty && (
 							<Tile
 								key={sectorIndex}
-								column={sectorIndex % columns}
-								row={Math.floor(sectorIndex / columns)}
+								column={sectorIndex % width}
+								row={Math.floor(sectorIndex / width)}
 							/>
 						),
 				)}

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { WindowContainer } from "ui/components/window";
 import { Map } from "./map";
@@ -8,29 +8,33 @@ import { ChitConfig } from "./databattle/chit";
 import { ProgramConfig } from "./databattle/program";
 import { LevelDefinition } from "./databattle/level";
 
+import nightfallPackConfig from 'packs/nightfall';
+
 export interface PackConfig {
+	id: string;
 	chits?: ChitConfig[];
 	programs?: ProgramConfig[];
 	levels?: LevelDefinition[];
 }
 
-const GameConfig: { [key: string]: PackConfig } = {};
-export const registerPack = (packId: string, packConfig: PackConfig) => {
-	GameConfig[packId] = packConfig;
-};
+const gameConfig: { [key: string]: PackConfig } = { ...nightfallPackConfig };
+// export const registerPack = (packId: string, packConfig: PackConfig) => {
+// 	gameConfig[packId] = packConfig;
+// };
 export const findChitConfig = (id: string) => {
 	const [packId, chitId] = id.split(":");
-	return GameConfig[packId]?.chits?.find(chit => chit.id === chitId);
+	return gameConfig[packId]?.chits?.find(chit => chit.id === chitId);
 };
 export const findProgramConfig = (id: string) => {
 	const [packId, programId] = id.split(":");
-	return GameConfig[packId]?.programs?.find(program => program.id === programId);
+	return gameConfig[packId]?.programs?.find(program => program.id === programId);
 };
 
 export const Game = () => {
+	const dispatch = useDispatch();
 	useEffect(() => {
-		GameConfig.nightfall.levels.forEach(level => loadLevel(level));
-	}, []);
+		gameConfig.nightfall.levels.forEach(level => dispatch(loadLevel(level)));
+	}, [dispatch]);
 
 	const databattleIds = useSelector(selectDatabattleIds);
 

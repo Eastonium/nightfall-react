@@ -14,7 +14,7 @@ import { Chit } from "./chit";
 import { Program } from "./program";
 import { selectDatabattle } from ".";
 
-export const DataBattleIdContext = createContext<{ id: any; columns: number; rows: number }>(null);
+export const DataBattleIdContext = createContext<number>(null);
 
 interface DataBattleProps extends WindowProps {
 	id: any;

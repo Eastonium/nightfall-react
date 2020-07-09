@@ -1,4 +1,4 @@
-import { registerPack, PackConfig } from "game";
+import { PackConfig } from "game";
 
 import uploadZoneIcon from "./textures/grid/chits/upload_zone.png";
 import creditsIcon from "./textures/grid/chits/credits.png";
@@ -9,8 +9,9 @@ import { enemyPrograms } from "./programs/enemyPrograms";
 
 import testLevel1 from "./levels/test_1";
 
-export const packId = "nightfall";
-const nightfallPackConfig: PackConfig = {
+const packId = "nightfall";
+const packConfig: PackConfig = {
+	id: packId,
 	chits: [
 		{
 			id: "upload_zone",
@@ -34,7 +35,5 @@ const nightfallPackConfig: PackConfig = {
 	programs: [...allyPrograms, ...enemyPrograms],
 	levels: [testLevel1],
 };
-console.log("test")
-registerPack(packId, nightfallPackConfig);
 
-export default () => {};
+export default { [packId]: packConfig };
