@@ -6,7 +6,9 @@
 	],
 	"settings": {
 		"cSpell.words": [
-			"Databattle"
-		]
+			"Databattle",
+			"databattles"
+		],
+		"explorer.sortOrder": "type"
 	}
 }

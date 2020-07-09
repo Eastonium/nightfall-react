@@ -3,7 +3,7 @@ import { useContext, memo } from "react";
 import { css, jsx, keyframes } from "@emotion/core";
 import { shade } from "polished";
 
-import { DataBattleContext } from "game/databattle";
+import { DataBattleIdContext } from "game/databattle";
 
 export const gridUnitSize = 32;
 const depth = 3;
@@ -21,7 +21,7 @@ const _Segment = ({
 	connectRight = false,
 	connectDown = false,
 }) => {
-	const { id: dataBattleId } = useContext(DataBattleContext);
+	const dataBattleId = useContext(DataBattleIdContext);
 	const shadeColor = shade(0.5, color);
 	return (
 		<g transform={`translate(${column * gridUnitSize} ${row * gridUnitSize})`}>
@@ -74,7 +74,7 @@ const _Segment = ({
 export const Segment = memo(_Segment);
 
 const _SegmentClipPath = () => {
-	const { id: dataBattleId } = useContext(DataBattleContext);
+	const dataBattleId = useContext(DataBattleIdContext);
 	return (
 		<clipPath id={`segment-clipPath-${dataBattleId}`}>
 			<rect x={shapeOffset} y={shapeOffset} width={shapeSize} height={shapeSize} />

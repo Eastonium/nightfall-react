@@ -1,7 +1,7 @@
-import React, { useContext, useCallback, useMemo } from "react";
+import React, { useContext, useCallback, Dispatch, SetStateAction } from "react";
+import { useSelectorWithProps } from "utils";
 
-import { PackConfigContext } from "game/index";
-import { DataBattleContext } from "../index";
+import { DataBattleIdContext, selectDatabattle } from "../index";
 import { Position } from "./position";
 import {
 	gridUnitSize,
@@ -9,45 +9,41 @@ import {
 	SegmentClipPath,
 	CellSelectionIndicator,
 	Tile,
-} from "./components/segment";
+} from "./segment";
+import { Chit as IChit } from "../chit";
+import { Program as IProgram } from "../program";
 
 interface GridProps extends React.HTMLProps<HTMLDivElement> {
-	cellEmptyState: boolean[];
-	chits: any[];
-	programs: any[];
-	setSelectedChit: unknown;
-	selectedChitInfo: any;
+	cellVoidState: boolean[];
+	chits: IChit[];
+	programs: IProgram[];
+	selectedChit: IChit | IProgram;
+	setSelectedChit: Dispatch<SetStateAction<IChit | IProgram>>;
 }
-
 export const Grid = ({
-	cellEmptyState,
+	cellVoidState,
 	chits,
 	programs,
+	selectedChit,
 	setSelectedChit,
-	selectedChitInfo,
 	...props
 }: GridProps) => {
-	const { columns, rows } = useContext(DataBattleContext);
-
-	const cellTrueEmptyState = useMemo(() => {
-		const cellTrueEmptyState = cellEmptyState.slice();
-		chits.forEach(chit => (cellTrueEmptyState[chit.pos.sectorIndex] = false));
-		return cellTrueEmptyState;
-	}, [chits, cellEmptyState]);
+	const databattleId = useContext(DataBattleIdContext);
+	const { grid: { width, height } } = useSelectorWithProps(selectDatabattle, databattleId);
 
 	const selectedChitPosition =
-		selectedChitInfo?.instance?.pos ?? selectedChitInfo?.instance?.slug?.[0];
+		selectedChit instanceof IProgram ? selectedChit.slug[0] : selectedChit?.pos;
 
 	return (
 		<div {...props}>
-			<svg width={columns * gridUnitSize} height={rows * gridUnitSize}>
-				{cellEmptyState.map(
+			<svg width={width * gridUnitSize} height={height * gridUnitSize}>
+				{cellVoidState.map(
 					(isEmpty, sectorIndex) =>
 						isEmpty && (
 							<Tile
 								key={sectorIndex}
-								column={sectorIndex % columns}
-								row={Math.floor(sectorIndex / columns)}
+								column={sectorIndex % width}
+								row={Math.floor(sectorIndex / width)}
 							/>
 						),
 				)}
@@ -73,27 +69,31 @@ export const Grid = ({
 	);
 };
 
-const _Chit = ({ chit, setSelectedChit }) => {
-	const packConfig = useContext(PackConfigContext);
-
-	const [packId, chitId] = chit.type.split(":");
-	const { icon } = packConfig[packId].chits[chitId];
+interface ChitProps {
+	chit: IChit;
+	setSelectedChit: Dispatch<SetStateAction<IChit>>;
+}
+const _Chit = ({ chit, setSelectedChit }: ChitProps) => {
 	const { column, row } = chit.pos;
 
 	const handleClick = useCallback(() => setSelectedChit(chit), [chit, setSelectedChit]);
 
 	return (
-		<image x={column * gridUnitSize} y={row * gridUnitSize} href={icon} onClick={handleClick} />
+		<image
+			x={column * gridUnitSize}
+			y={row * gridUnitSize}
+			href={chit.icon}
+			onClick={handleClick}
+		/>
 	);
 };
 const Chit = React.memo(_Chit);
 
-const _Program = ({ program, setSelectedChit }) => {
-	const packConfig = useContext(PackConfigContext);
-
-	const [packId, chitId] = program.type.split(":");
-	const { icon, color } = packConfig[packId].programs[chitId];
-
+interface ProgramProps {
+	program: IProgram;
+	setSelectedChit: Dispatch<SetStateAction<IProgram>>;
+}
+const _Program = ({ program, setSelectedChit }: ProgramProps) => {
 	const handleClick = useCallback(() => setSelectedChit(program), [program, setSelectedChit]);
 
 	return (
@@ -105,10 +105,11 @@ const _Program = ({ program, setSelectedChit }) => {
 				return (
 					<Segment
 						key={i}
-						{...{ column, row, color }}
-						icon={i === 0 ? icon : null}
-						connectRight={posRight && allPos.find(posRight.equals)}
-						connectDown={posDown && allPos.find(posDown.equals)}
+						{...{ column, row }}
+						color={program.color}
+						icon={i === 0 ? program.icon : null}
+						connectRight={posRight && allPos.find(posRight.equals) != null}
+						connectDown={posDown && allPos.find(posDown.equals) != null}
 					/>
 				);
 			})}

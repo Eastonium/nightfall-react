@@ -1,24 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from 'react-redux';
-import { createStoreAbstraction } from 'redux-dogma';
+import { Provider } from "react-redux";
+import { createStoreAbstraction } from "redux-dogma";
 import { Global } from "@emotion/core";
 import * as serviceWorker from "./serviceWorker";
 
 import globalStyles from "./ui/globalStyles";
-import { Game } from "./game/index";
+import { Game, gameSlice } from "./game/index";
 
-const store =  createStoreAbstraction()
-	// .addSlice()
-	.lockSideEffects()
-	.getStore();
+const store = createStoreAbstraction().addSlice(gameSlice).lockSideEffects().getStore();
 
 export const ReduxProvider = ({ children }) => <Provider {...{ store, children }} />;
 
 ReactDOM.render(
 	<ReduxProvider>
 		<Global styles={globalStyles} />
-		<Game packId="nightfall" />
+		<Game />
 	</ReduxProvider>,
 	document.getElementById("root"),
 );
