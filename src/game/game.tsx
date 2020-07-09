@@ -1,35 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { WindowContainer } from "ui/components/window";
 import { Map } from "./map";
-import { DataBattle } from "./databattle";
+import { DataBattle, loadLevel, selectDatabattleIds } from "./databattle";
 import { ChitConfig } from "./databattle/chit";
 import { ProgramConfig } from "./databattle/program";
+import { LevelDefinition } from "./databattle/level";
 
-import nightfallPackConfig from "assets/nightfall";
-
-interface GameConfig {
-	[key: string]: PackConfig;
-}
 export interface PackConfig {
 	chits?: ChitConfig[];
 	programs?: ProgramConfig[];
+	levels?: LevelDefinition[];
 }
 
-export const GameConfigContext = React.createContext<GameConfig>(null);
+const GameConfig: { [key: string]: PackConfig } = {};
+export const registerPack = (packId: string, packConfig: PackConfig) => {
+	GameConfig[packId] = packConfig;
+};
+export const findChitConfig = (id: string) => {
+	const [packId, chitId] = id.split(":");
+	return GameConfig[packId]?.chits?.find(chit => chit.id === chitId);
+};
+export const findProgramConfig = (id: string) => {
+	const [packId, programId] = id.split(":");
+	return GameConfig[packId]?.programs?.find(program => program.id === programId);
+};
 
-interface GameProps {
-	packId: string;
-}
-export const Game = ({ packId }: GameProps) => {
-	const [config, setConfig] = useState<GameConfig>({ nightfall: nightfallPackConfig });
+export const Game = () => {
+	useEffect(() => {
+		GameConfig.nightfall.levels.forEach(level => loadLevel(level));
+	}, []);
+
+	const databattleIds = useSelector(selectDatabattleIds);
 
 	return (
-		<GameConfigContext.Provider value={config}>
+		<>
 			<Map />
 			<WindowContainer coverScreen>
-				<DataBattle id={0} x={40} y={30} />
+				{databattleIds.map((id, i) => (
+					<DataBattle id={id} x={30 + 10 * i} y={30 + 10 * 1} />
+				))}
 			</WindowContainer>
-		</GameConfigContext.Provider>
+		</>
 	);
 };

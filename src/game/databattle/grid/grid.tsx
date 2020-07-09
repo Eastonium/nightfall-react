@@ -80,7 +80,7 @@ const _Chit = ({ chit, setSelectedChit }: ChitProps) => {
 		<image
 			x={column * gridUnitSize}
 			y={row * gridUnitSize}
-			href={chit.iconPath}
+			href={chit.icon}
 			onClick={handleClick}
 		/>
 	);
@@ -104,8 +104,8 @@ const _Program = ({ program, setSelectedChit }: ProgramProps) => {
 					<Segment
 						key={i}
 						{...{ column, row }}
-						color={program.config.color}
-						iconPath={i === 0 ? program.iconPath : null}
+						color={program.color}
+						icon={i === 0 ? program.icon : null}
 						connectRight={posRight && allPos.find(posRight.equals) != null}
 						connectDown={posDown && allPos.find(posDown.equals) != null}
 					/>

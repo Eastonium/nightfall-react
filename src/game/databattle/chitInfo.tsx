@@ -11,7 +11,7 @@ interface ChitInfo {
 	chit: Chit | Program;
 }
 const _ChitInfo = ({ chit }: ChitInfo) => {
-	const programCommands = chit instanceof Program ? chit.config.commands : null;
+	const programCommands = chit instanceof Program ? chit.commands : null;
 	const [selectedCommand, setSelectedCommand] = useState(null);
 	const selectCommandPerIndex = useMemo(
 		() => programCommands?.map(command => () => setSelectedCommand(command)),
@@ -27,18 +27,18 @@ const _ChitInfo = ({ chit }: ChitInfo) => {
 				{chit instanceof Program ? (
 					<Fragment>
 						<svg css={styles.icon}>
-							<Segment iconPath={chit.iconPath} color={chit.config.color} />
+							<Segment icon={chit.icon} color={chit.color} />
 						</svg>
-						<span>Move: {chit.config.speed}</span>
-						<span>Max Size: {chit.config.maxSize}</span>
+						<span>Move: {chit.speed}</span>
+						<span>Max Size: {chit.maxSize}</span>
 						<span>Current Size: {chit.slug.length}</span>
 					</Fragment>
 				) : (
-					<img src={chit.iconPath} alt={chit.config.name} css={styles.icon} />
+					<img src={chit.icon} alt={chit.name} css={styles.icon} />
 				)}
 			</div>
-			<span css={styles.h1}>{chit.config.name}</span>
-			<span css={styles.p}>{chit.config.desc}</span>
+			<span css={styles.h1}>{chit.name}</span>
+			<span css={styles.p}>{chit.desc}</span>
 			{chit instanceof Program && (
 				<Fragment>
 					<span css={styles.h2}>Commands</span>

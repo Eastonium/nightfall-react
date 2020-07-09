@@ -40,38 +40,17 @@ export default {
 		},
 	},
 	chits: [
-		{
-			type: "nightfall:data_item",
-			pos: [1, 2],
-		},
-		{
-			type: "nightfall:credits",
-			pos: [1, 5],
-		},
-		{
-			type: "nightfall:credits",
-			pos: [1, 8],
-		},
-		{
-			type: "nightfall:upload_zone",
-			pos: [11, 1],
-		},
-		{
-			type: "nightfall:upload_zone",
-			pos: [12, 1],
-		},
-		{
-			type: "nightfall:upload_zone",
-			pos: [11, 9],
-		},
-		{
-			type: "nightfall:upload_zone",
-			pos: [12, 9],
-		},
+		{ id: "nightfall:data_item", pos: [1, 2] },
+		{ id: "nightfall:credits", pos: [1, 5] },
+		{ id: "nightfall:credits", pos: [1, 8] },
+		{ id: "nightfall:upload_zone", pos: [11, 1] },
+		{ id: "nightfall:upload_zone", pos: [12, 1] },
+		{ id: "nightfall:upload_zone", pos: [11, 9] },
+		{ id: "nightfall:upload_zone", pos: [12, 9] },
 	],
 	programs: [
 		{
-			type: "nightfall:dog_2",
+			id: "nightfall:dog_2",
 			slug: [
 				[3, 1],
 				[3, 2],
@@ -79,25 +58,10 @@ export default {
 				[3, 4],
 			],
 		},
-		{
-			type: "nightfall:dog_2",
-			slug: [[2, 2]],
-		},
-		{
-			type: "nightfall:dog_2",
-			slug: [[0, 3]],
-		},
-		{
-			type: "nightfall:dog_2",
-			slug: [[1, 4]],
-		},
-		{
-			type: "nightfall:dog_2",
-			slug: [[2, 5]],
-		},
-		{
-			type: "nightfall:dog_2",
-			slug: [[1, 7]],
-		},
+		{ id: "nightfall:dog_2", slug: [[2, 2]] },
+		{ id: "nightfall:dog_2", slug: [[0, 3]] },
+		{ id: "nightfall:dog_2", slug: [[1, 4]] },
+		{ id: "nightfall:dog_2", slug: [[2, 5]] },
+		{ id: "nightfall:dog_2", slug: [[1, 7]] },
 	],
 } as LevelDefinition;

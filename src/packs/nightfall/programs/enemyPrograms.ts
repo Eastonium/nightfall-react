@@ -1,13 +1,32 @@
 import { ProgramConfig } from "game/databattle/program";
 
+import sentinel1Icon from '../textures/grid/programs/sentinel_1.png';
+import sentinel2Icon from '../textures/grid/programs/sentinel_2.png';
+import sentinel3Icon from '../textures/grid/programs/sentinel_3.png';
+import watchman1Icon from '../textures/grid/programs/watchman_1.png';
+import watchman2Icon from '../textures/grid/programs/watchman_2.png';
+import watchman3Icon from '../textures/grid/programs/watchman_3.png';
+import dog1Icon from '../textures/grid/programs/dog_1.png';
+import dog2Icon from '../textures/grid/programs/dog_2.png';
+import dog3Icon from '../textures/grid/programs/dog_3.png';
+import warden1Icon from '../textures/grid/programs/warden_1.png';
+import warden2Icon from '../textures/grid/programs/warden_2.png';
+import warden3Icon from '../textures/grid/programs/warden_3.png';
+import ping1Icon from '../textures/grid/programs/ping_1.png';
+import ping2Icon from '../textures/grid/programs/ping_2.png';
+import ping3Icon from '../textures/grid/programs/ping_3.png';
+import fireWallIcon from '../textures/grid/programs/fire_wall.png';
+import bossIcon from '../textures/grid/programs/boss.png';
+
 export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "sentinel_1",
 		name: "Sentinel",
-		desc: [null, "Corporate data defender"],
+		desc: "Corporate data defender",
+		icon: sentinel1Icon,
 		speed: 1,
 		maxSize: 3,
-		color: [null, "#fc9800"],
+		color: "#fc9800",
 		commands: [
 			{
 				name: "Cut",
@@ -23,10 +42,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "sentinel_2",
 		name: "Sentinel 2.0",
-		desc: [null, "Improved corporate data defender"],
+		desc: "Improved corporate data defender",
+		icon: sentinel2Icon,
 		speed: 2,
 		maxSize: 4,
-		color: [null, "#fc9800"],
+		color: "#fc9800",
 		commands: [
 			{
 				name: "Cut",
@@ -42,10 +62,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "sentinel_3",
 		name: "Sentinel 3.0",
-		desc: [null, "Top of the line in corporate data defense"],
+		desc: "Top of the line in corporate data defense",
+		icon: sentinel3Icon,
 		speed: 2,
 		maxSize: 4,
-		color: [null, "#fc9800"],
+		color: "#fc9800",
 		commands: [
 			{
 				name: "Taser",
@@ -61,10 +82,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "watchman_1",
 		name: "Watchman",
-		desc: [null, "Corporate ranged attack program"],
+		desc: "Corporate ranged attack program",
+		icon: watchman1Icon,
 		speed: 1,
 		maxSize: 2,
-		color: [null, "#ff258a"],
+		color: "#ff258a",
 		commands: [
 			{
 				name: "Phaser",
@@ -80,10 +102,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "watchman_2",
 		name: "Watchman X",
-		desc: [null, "Improved version of Watchman"],
+		desc: "Improved version of Watchman",
+		icon: watchman2Icon,
 		speed: 1,
 		maxSize: 4,
-		color: [null, "#ff258a"],
+		color: "#ff258a",
 		commands: [
 			{
 				name: "Phaser",
@@ -99,10 +122,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "watchman_3",
 		name: "Watchman SP",
-		desc: [null, "Qui custodiet ipsos custodes?"],
+		desc: "Qui custodiet ipsos custodes?",
+		icon: watchman3Icon,
 		speed: 1,
 		maxSize: 4,
-		color: [null, "#ff258a"],
+		color: "#ff258a",
 		commands: [
 			{
 				name: "Photon",
@@ -118,10 +142,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "dog_1",
 		name: "Guard Pup",
-		desc: [null, "A speedy little corporate cur"],
+		desc: "A speedy little corporate cur",
+		icon: dog1Icon,
 		speed: 3,
 		maxSize: 2,
-		color: [null, "#fcbb00"],
+		color: "#fcbb00",
 		commands: [
 			{
 				name: "Byte",
@@ -137,10 +162,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "dog_2",
 		name: "Guard Dog",
-		desc: [null, "Who let the dogs out?"],
+		desc: "Who let the dogs out?",
+		icon: dog2Icon,
 		speed: 3,
 		maxSize: 3,
-		color: [null, "#fcbb00"],
+		color: "#fcbb00",
 		commands: [
 			{
 				name: "Byte",
@@ -156,10 +182,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "dog_3",
 		name: "Attack Dog",
-		desc: [null, "Ravenous and bloodthirsty corporate canine"],
+		desc: "Ravenous and bloodthirsty corporate canine",
+		icon: dog3Icon,
 		speed: 4,
 		maxSize: 7,
-		color: [null, "#fcbb00"],
+		color: "#fcbb00",
 		commands: [
 			{
 				name: "Megabyte",
@@ -175,10 +202,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "warden_1",
 		name: "Warden",
-		desc: [null, "Slow and steady corporate attack program"],
+		desc: "Slow and steady corporate attack program",
+		icon: warden1Icon,
 		speed: 1,
 		maxSize: 5,
-		color: [null, "#fc0010"],
+		color: "#fc0010",
 		commands: [
 			{
 				name: "Thump",
@@ -194,10 +222,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "warden_2",
 		name: "Warden+",
-		desc: [null, "Get out of its way"],
+		desc: "Get out of its way",
+		icon: warden2Icon,
 		speed: 2,
 		maxSize: 6,
-		color: [null, "#fc0010"],
+		color: "#fc0010",
 		commands: [
 			{
 				name: "Bash",
@@ -213,10 +242,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "warden_3",
 		name: "Warden++",
-		desc: [null, "The last word in corporate security"],
+		desc: "The last word in corporate security",
+		icon: warden3Icon,
 		speed: 3,
 		maxSize: 7,
-		color: [null, "#fc0010"],
+		color: "#fc0010",
 		commands: [
 			{
 				name: "Crash",
@@ -232,10 +262,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "ping_1",
 		name: "Sensor",
-		desc: [null, "Immobile program eradicator"],
+		desc: "Immobile program eradicator",
+		icon: ping1Icon,
 		speed: 0,
 		maxSize: 1,
-		color: [null, "#fcf101"],
+		color: "#fcf101",
 		commands: [
 			{
 				name: "Blip",
@@ -251,10 +282,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "ping_2",
 		name: "Radar",
-		desc: [null, "Deadly program eradicator"],
+		desc: "Deadly program eradicator",
+		icon: ping2Icon,
 		speed: 0,
 		maxSize: 1,
-		color: [null, "#fcf101"],
+		color: "#fcf101",
 		commands: [
 			{
 				name: "Pong",
@@ -270,10 +302,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "ping_3",
 		name: "Sonar",
-		desc: [null, "Long-range program eradicator"],
+		desc: "Long-range program eradicator",
+		icon: ping3Icon,
 		speed: 0,
 		maxSize: 1,
-		color: [null, "#fcf101"],
+		color: "#fcf101",
 		commands: [
 			{
 				name: "Ping",
@@ -289,10 +322,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "fire_wall",
 		name: "Fire Wall",
-		desc: [null, "Keeps unwanted programs out of corporate sectors"],
+		desc: "Keeps unwanted programs out of corporate sectors",
+		icon: fireWallIcon,
 		speed: 2,
 		maxSize: 20,
-		color: [null, "#fc6200"],
+		color: "#fc6200",
 		commands: [
 			{
 				name: "Burn",
@@ -308,10 +342,11 @@ export const enemyPrograms: ProgramConfig[] = [
 	{
 		id: "boss",
 		name: "Boss",
-		desc: [null, "Prepare to be owned"],
+		desc: "Prepare to be owned",
+		icon: bossIcon,
 		speed: 6,
 		maxSize: 25,
-		color: [null, "#fc6200"],
+		color: "#fc6200",
 		commands: [
 			{
 				name: "Shutdown",

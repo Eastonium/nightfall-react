@@ -16,7 +16,7 @@ const connectorWidth = 7;
 const _Segment = ({
 	column = 0,
 	row = 0,
-	iconPath,
+	icon,
 	color,
 	connectRight = false,
 	connectDown = false,
@@ -66,7 +66,7 @@ const _Segment = ({
 			)}
 			<g clipPath={`url(#segment-clipPath-${dataBattleId})`}>
 				<rect x={0} y={0} width={gridUnitSize} height={gridUnitSize} fill={color} />
-				<image href={iconPath} x={iconOffset} y={iconOffset} />
+				<image href={icon} x={iconOffset} y={iconOffset} />
 			</g>
 		</g>
 	);

@@ -1,23 +1,34 @@
 import { Position } from "./grid/position";
 
-export interface ChitConfig {
-	id: string;
-	name: string;
-	desc: string;
+interface ChitBase {
+	name?: string;
+	desc?: string;
+	icon?: string;
 }
-export interface ChitInstanceDefinition {
-	type: string;
+export interface ChitConfig extends Required<ChitBase> {
+	id: string;
+}
+export interface ChitInstanceDefinition extends ChitBase {
+	id: string;
 	pos: [number, number];
 }
 
-export class Chit {
-	config: ChitConfig;
+export class Chit implements ChitBase {
 	pos: Position;
-	iconPath: string;
+	private config: ChitConfig;
+	private configMods: ChitBase;
 
-	constructor(config: ChitConfig, pos: Position, iconPath: string) {
-		this.config = config;
-		this.pos = pos;
-		this.iconPath = iconPath;
+	name: string;
+	desc: string;
+	icon: string;
+
+	constructor(pos: Position, config: ChitConfig, configMods: ChitBase = {}) {
+		Object.assign(this, { pos, config, configMods });
+
+		["name", "desc", "icon"].forEach(prop =>
+			Object.defineProperty(this, prop, {
+				get: () => this.configMods[prop] ?? this.config[prop],
+			}),
+		);
 	}
 }

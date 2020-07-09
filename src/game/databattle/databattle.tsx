@@ -2,23 +2,27 @@
 import { useState, memo, createContext } from "react";
 import { css, jsx } from "@emotion/core";
 
+import { useSelectorWithProps } from "utils";
 import { Button } from "ui/components/button";
 import { Window, WindowProps } from "ui/components/window";
 
 import { ChitInfo } from "./chitInfo";
 import { Grid } from "./grid";
 
-import spybotImage from "assets/nightfall/textures/spybots/Snaptrax S45.png";
+import spybotImage from "packs/nightfall/textures/spybots/Snaptrax S45.png";
 import { Chit } from "./chit";
 import { Program } from "./program";
+import { selectDatabattle } from ".";
 
-export const DataBattleContext = createContext<{ id: any; columns: number; rows: number }>(null);
+export const DataBattleIdContext = createContext<{ id: any; columns: number; rows: number }>(null);
 
 interface DataBattleProps extends WindowProps {
 	id: any;
 }
 const _DataBattle = ({ id, ...props }: DataBattleProps) => {
 	const [selectedChit, setSelectedChit] = useState<Chit | Program>(null);
+
+	const { cellVoidState, chits, programs } = useSelectorWithProps(selectDatabattle, id);
 
 	return (
 		<Window
@@ -28,7 +32,7 @@ const _DataBattle = ({ id, ...props }: DataBattleProps) => {
 			{...props}
 		>
 			<div css={styles.layoutContainer}>
-				<DataBattleContext.Provider value={{ id, columns, rows }}>
+				<DataBattleIdContext.Provider value={id}>
 					<Window title="spybot" sectioned>
 						<img src={spybotImage} alt="spybot" css={{ display: "block" }} />
 					</Window>
@@ -49,7 +53,7 @@ const _DataBattle = ({ id, ...props }: DataBattleProps) => {
 						css={styles.grid}
 						{...{ cellVoidState, chits, programs, selectedChit, setSelectedChit }}
 					/>
-				</DataBattleContext.Provider>
+				</DataBattleIdContext.Provider>
 			</div>
 		</Window>
 	);

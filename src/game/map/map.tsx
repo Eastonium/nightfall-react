@@ -2,7 +2,7 @@
 import { memo } from "react";
 import { css, jsx } from "@emotion/core";
 
-import MapImage from "assets/nightfall/textures/maps/map.png";
+import MapImage from "packs/nightfall/textures/maps/map.png";
 
 const _Map = () => <div css={styles.map}></div>;
 export const Map = memo(_Map);
